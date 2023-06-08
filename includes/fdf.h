@@ -13,6 +13,13 @@
 #ifndef FDF_H
 # define FDF_H
 
-#include "../libft/libft.h"
+# include "../libft/libft.h"
+# include "../minilibx_macos/mlx.h"
+
+# define WINDOW_WIDTH 1920
+# define WINDOW_HEIGHT 1800
+# define MLX_ERROR 1
+
+// main.c
 
 #endif

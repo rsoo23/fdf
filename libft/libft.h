@@ -6,19 +6,22 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/03/06 14:16:05 by rsoo              #+#    #+#             */
-/*   Updated: 2023/05/28 20:38:26 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/05/31 11:06:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
-# include <stdlib.h> // exit, malloc, free
-# include <unistd.h> // read, write, close
-# include <stdint.h>
-# include <fcntl.h> // open
-# include <string.h> // strerror 
+# include <stdlib.h>
+# include <unistd.h> // access, dup, dup2, execve, exit, fork, pipe, unlink
+# include <stdint.h> 
+# include <fcntl.h>
+# include <string.h> // strerror
 # include <stdio.h> // perror
+# include <sys/wait.h> // wait, waitpid
+
+# include "get_next_line/get_next_line_bonus.h"
 
 typedef struct s_list
 {
