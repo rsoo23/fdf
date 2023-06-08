@@ -13,30 +13,101 @@
 #include "../includes/fdf.h"
 
 /*
-mlx_new_window(mlx, width, height, name): ctrl + c to close window
-mlx_loop: initiate window rendering
+Notes:
+mlx_new_window(mlx, width, height, name): 
+    ctrl + c to close window
+
+mlx_loop: 
+    initiate window rendering
+
+mlx_loop_hook: 
+    add extra functionality to your program by defining 
+    a function that gets executed repeatedly within the main loop of 
+    your program. It allows you to perform specific tasks or actions at 
+    regular intervals while the program is running.
+
+mlx_ptr:
+    special key that grants access to the graphics system, 
+    allowing you to create and manage graphical windows
+
+win_ptr:
+    represents the game window itself, enabling you to interact with 
+    it, change its size, and respond to user input.
+
+mlx_ptr is required to create win_ptr and establish a connection to 
+the graphics system. Together, they provide the means to display graphics
+ and create interactive experiences in a game or program.
 */
 
 // clang main.c -lX11 -lXext -lmlx
+// gcc main.c -lmlx -framework OpenGL -framework AppKit
 
-int	main(void)
+#define RED_PIXEL 0xFF0000
+
+int	handle_no_event(void *data)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	// t_data	img;
+	return (0);
+}
 
-	mlx_ptr = mlx_init();
-	if (mlx_ptr == NULL)
-		return (MLX_ERROR);
-	win_ptr = mlx_new_window(mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!");
-	if (win_ptr == NULL)
+int	handle_keypress(int keysym, t_data *data)
+{
+	if (keysym == XK_Escape)
 	{
-		free(win_ptr);
-		return (MLX_ERROR);
+		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
+		data->win_ptr = NULL;
 	}
-	while (1)
-		 ;
-	mlx_destroy_window(mlx_ptr, win_ptr);
-	mlx_destroy_display(mlx_ptr);
-	free(mlx_ptr);
+	printf("Keypress: %d\n", keysym);
+	return (0);
+}
+
+int	render(t_data *data)
+{
+	if (data->win_ptr != NULL)
+		mlx_pixel_put(data->mlx_ptr, data->win_ptr, \
+		WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RED_PIXEL);
+	return (0);
+}
+
+int	handle_keyrelease(int keysym, void *data)
+{
+	printf("Keyrelease: %d\n", keysym);
+	return (0);
+}
+
+void	parse_map(char *file)
+{
+	int		fd;
+	char	**values;
+
+	fd = open(file, O_RDONLY);
+	if (fd < 0)
+	{
+		ft_printf("Failed to open file");
+		exit(1);
+	}
+}
+
+int	main(int ac, char **av)
+{
+	t_data	data;
+
+	if (ac != 2)
+		return (1);
+    data.mlx_ptr = mlx_init();
+	if (data.mlx_ptr == NULL)
+		return (1);
+	parse_map(av[1]);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, \
+	WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!");
+	if (data.win_ptr == NULL)
+	{
+		free(data.win_ptr);
+		return (1);
+	}
+	mlx_loop_hook(data.mlx_ptr, &render, &data);
+	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
+	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
+	mlx_loop(data.mlx_ptr);
+	mlx_destroy_display(data.mlx_ptr);
+	free(data.mlx_ptr);
 }
