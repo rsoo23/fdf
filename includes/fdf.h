@@ -15,20 +15,12 @@
 
 # include "../libft/libft.h"
 # include "../minilibx_macos/mlx.h"
-# include <mlx.h>
-# include <X11/keysym.h>
-# include <X11/X.h>
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define MLX_ERROR 1
 
-typedef struct	s_data
-{
-	void	*mlx_ptr;
-	void	*win_ptr;
-	t_img	img;
-}	t_data;
+# define ESC_KEY 53
 
 /*
 mlx_img: refers to the address mlx_new_image returns
@@ -42,6 +34,14 @@ typedef struct	s_img
 	int		line_len;
 	int		endian;
 }	t_img;
+
+typedef struct	s_data
+{
+	void	*mlx_ptr;
+	void	*win_ptr;
+	t_img	img;
+}	t_data;
+
 
 // main.c
 

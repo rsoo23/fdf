@@ -44,70 +44,71 @@ the graphics system. Together, they provide the means to display graphics
 
 #define RED_PIXEL 0xFF0000
 
-int	handle_no_event(void *data)
+int	esc_window(int keysym, t_data *data)
 {
-	return (0);
-}
-
-int	handle_keypress(int keysym, t_data *data)
-{
-	if (keysym == XK_Escape)
+	if (keysym == ESC_KEY)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
 		data->win_ptr = NULL;
 	}
-	printf("Keypress: %d\n", keysym);
-	return (0);
+	exit(EXIT_SUCCESS);
 }
 
-int	render(t_data *data)
-{
-	if (data->win_ptr != NULL)
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, \
-		WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RED_PIXEL);
-	return (0);
-}
+// int	render(t_data *data)
+// {
+// 	if (data->win_ptr != NULL)
+// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RED_PIXEL);
+// 	return (0);
+// }
 
-int	handle_keyrelease(int keysym, void *data)
+int	keyrelease_checker(int keysym)
 {
 	printf("Keyrelease: %d\n", keysym);
 	return (0);
 }
 
-void	parse_map(char *file)
-{
-	int		fd;
-	char	**values;
+// void	parse_map(char *infile)
+// {
+// 	int		fd;
+// 	char	*line;
+// 	char	**values;
 
-	fd = open(file, O_RDONLY);
-	if (fd < 0)
-	{
-		ft_printf("Failed to open file");
-		exit(1);
-	}
-}
+// 	fd = open(infile, O_RDONLY);
+// 	if (fd < 0)
+// 	{
+// 		ft_printf(1, "Failed to open file\n", 20);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	line = get_next_line(fd);
+// 	while (line)
+// 	{
+// 		values[0] = malloc 
+// 		free(line);
+// 		line = get_next_line(fd);
+// 	}
+// }
+
+// gcc srcs/main.c -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit && ./a.out 42.fdf
 
 int	main(int ac, char **av)
 {
 	t_data	data;
 
+	(void)av;
 	if (ac != 2)
 		return (1);
     data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (1);
-	parse_map(av[1]);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, \
-	WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!");
+	// parse_map(av[1]);
+	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "Hello World!");
 	if (data.win_ptr == NULL)
-	{
-		free(data.win_ptr);
 		return (1);
-	}
-	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	mlx_hook(data.win_ptr, KeyPress, KeyPressMask, &handle_keypress, &data);
-	mlx_hook(data.win_ptr, KeyRelease, KeyReleaseMask, &handle_keyrelease, &data);
+
+	mlx_pixel_put(data.mlx_ptr, data.win_ptr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RED_PIXEL);
+	// mlx_hook(data.win_ptr, 2, 1, &keyrelease_checker, &data);
+	mlx_hook(data.win_ptr, 2, 1, &esc_window, &data);
 	mlx_loop(data.mlx_ptr);
-	mlx_destroy_display(data.mlx_ptr);
-	free(data.mlx_ptr);
+	// mlx_destroy_display(data.mlx_ptr);
+	// free(data.mlx_ptr);
 }
