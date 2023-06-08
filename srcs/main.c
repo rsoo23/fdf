@@ -106,7 +106,8 @@ int	main(int ac, char **av)
     data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (1);
-	// parse_map(av[1]);
+	
+	parse_map(av, &data);
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
 	if (data.win_ptr == NULL)
 		return (1);

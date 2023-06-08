@@ -44,6 +44,11 @@ typedef struct	s_data
 {
 	void	*mlx_ptr;
 	void	*win_ptr;
+	char	*infile;
+	int		fd;
+	int		length;
+	int		width;
+	int		**alt_matrix;
 	t_img	img;
 }	t_data;
 
