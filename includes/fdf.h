@@ -18,9 +18,14 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
+# define START_X 0             // value: 0
+# define START_Y WINDOW_HEIGHT // value: 1080
+# define MID_X WINDOW_WIDTH / 2
+# define MID_Y WINDOW_HEIGHT / 2
 # define MLX_ERROR 1
 
 # define ESC_KEY 53
+# define RED_PIXEL 0xFF0000
 
 /*
 mlx_img: refers to the address mlx_new_image returns
@@ -42,7 +47,15 @@ typedef struct	s_data
 	t_img	img;
 }	t_data;
 
+typedef struct	s_point
+{
+	int	x;
+	int	y;
+}	t_point;
 
 // main.c
+
+// map_parsing.c
+void	parse_map(char *infile);
 
 #endif

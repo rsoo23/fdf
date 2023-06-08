@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 08:34:23 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/08 08:43:22 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/08 13:33:41 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,5 +30,5 @@ that represents a specific color in the RGB format.
 */
 int	encode_rgb(uint8_t red, uint8_t green, uint8_t blue)
 {
-	return (red << 16 | green << 8 | blue)
+	return (red << 16 | green << 8 | blue);
 }
