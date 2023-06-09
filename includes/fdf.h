@@ -61,6 +61,6 @@ typedef struct	s_point
 // main.c
 
 // map_parsing.c
-void	parse_map(char *infile);
+void	parse_map(char **av, t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 08:56:06 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/08 14:07:32 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/09 08:44:39 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,6 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fdiagnostics-color=always -g3
 RM = rm -rf
 
 SRCS_DIR = srcs/
-OBJS_DIR = objs/
 SRCS = main color map_parsing
 SRCS_CFILES = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS_CFILES:.c=.o)

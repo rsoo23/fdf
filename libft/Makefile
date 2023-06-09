@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/03/09 20:26:20 by rsoo              #+#    #+#              #
-#    Updated: 2023/05/31 10:59:57 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/09 09:33:10 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ OBJS_GNL = $(GNL_CFILES:.c=.o)
 
 FT_PRINTF_DIR = ft_printf
 FT_PRINTF = libftprintf.a
+
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $< -o $@

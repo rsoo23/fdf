@@ -106,11 +106,11 @@ int	main(int ac, char **av)
     data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (1);
-	
-	parse_map(av, &data);
+	// (void)av;
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
 	if (data.win_ptr == NULL)
 		return (1);
+	parse_map(av, &data);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	// mlx_pixel_put(data.mlx_ptr, data.win_ptr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RED_PIXEL);
 	// mlx_hook(data.win_ptr, 2, 1, &keyrelease_checker, &data);
