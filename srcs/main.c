@@ -112,9 +112,28 @@ int	main(int ac, char **av)
 		return (1);
 	parse_map(av, &data);
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
-	// mlx_pixel_put(data.mlx_ptr, data.win_ptr, WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2, RED_PIXEL);
 	// mlx_hook(data.win_ptr, 2, 1, &keyrelease_checker, &data);
 	mlx_hook(data.win_ptr, 2, 1, &esc_window, &data);
 	mlx_loop(data.mlx_ptr);
 	free(data.mlx_ptr);
 }
+
+/*
+Notes:
+draw lines based on the width and lengths 
+
+0 __ 0 __
+|    |
+
+Scale up by setting mulitplying the coordinates by a zoom factor
+
+Set color for different altitudes
+
+Isometric Projection Formulas:
+ - x' = (x - y) * cos(angle)
+ - y' = (x + y) * sin(angle) - z
+- the values of x' and y' are in 3d, default angle = 0.8
+
+Translation / Shifting
+- use mlx_clear_window
+*/

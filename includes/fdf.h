@@ -15,6 +15,7 @@
 
 # include "../libft/libft.h"
 # include "../minilibx_macos/mlx.h"
+# include <math.h>
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
