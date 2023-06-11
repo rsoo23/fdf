@@ -57,6 +57,7 @@ typedef struct	s_point
 {
 	int	x;
 	int	y;
+	int	z;
 }	t_point;
 
 // main.c

@@ -52,7 +52,7 @@ int	esc_window(int keysym, t_data *data)
 	return (1);
 }
 
-void	bresenham_line_draw(t_data *data, t_point p1, t_point p2)
+void	bresenham_line_draw(t_point p1, t_point p2, t_data *data)
 {
 	int	diff_x;
 	int	diff_y;
@@ -75,17 +75,34 @@ void	bresenham_line_draw(t_data *data, t_point p1, t_point p2)
 	}
 }
 
+void	init_points(t_point *p1, t_point *p2)
+{
+	p1->x = 0;
+	p1->y = 0;
+	p2->x = 0;
+	p2->y = 0;
+}
+
 int	render(t_data *data)
 {
 	t_point p1;
 	t_point p2;
+	int		x_index;
+	int		y_index;
 
-	p1.x = 960;
-	p1.y = 0;
-	p2.x = 1920;
-	p2.y = 1080;
-	if (data->win_ptr != NULL)
-		bresenham_line_draw(data, p1, p2);
+	init_points(&p1, &p2);
+	x_index = 0;
+	y_index = 0;
+	while (y_index < data->width)
+	{
+		while (x_index < data->length)
+		{
+			bresenham_line_draw(p1, p2, data);
+			bresenham_line_draw(p1, p2, data);
+			x_index++;
+		}
+		y_index++;
+	}
 	return (0);
 }
 
@@ -122,8 +139,13 @@ int	main(int ac, char **av)
 Notes:
 draw lines based on the width and lengths 
 
-0 __ 0 __
-|    |
+width: 2, length: 2
+
+0 __ 0 __ 0 
+|    |    
+0 __ 0 __ 0 
+|    |    
+0    0    0 
 
 Scale up by setting mulitplying the coordinates by a zoom factor
 

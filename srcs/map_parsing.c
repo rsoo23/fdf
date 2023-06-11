@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/10 11:25:48 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/11 10:12:52 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,14 +33,10 @@ static void	assign_altitude_matrix(t_data *data)
 	while (line)
 	{
 		data->alt_matrix[i] = malloc(sizeof(int) * (data->length + 1));
-		j = 0;
-		line = ft_strtrim(line, "\n");
 		num_arr = ft_split(line, ' ');
-		while (num_arr[j])
-		{
+		j = -1;
+		while (num_arr[++j])
 			data->alt_matrix[i][j] = ft_atoi(num_arr[j]);
-			j++;
-		}
 		free(num_arr);
 		free(line);
 		line = get_next_line(data->fd);
