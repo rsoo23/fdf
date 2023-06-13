@@ -34,7 +34,7 @@
 # define UP_ARROW 126
 # define KeyReleaseMask 1L<<1
 # define KeyPressMask 1L<<0
-# define RED_PIXEL 0xFF0000
+# define WHITE_PIXEL 0xFFFFFF
 
 /*
 mlx_img: refers to the address mlx_new_image returns

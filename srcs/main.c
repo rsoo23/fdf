@@ -57,35 +57,55 @@ void	init_data(t_data *data)
 	data->scale_factor = 50;
 }
 
-int	make_grid(t_data *data)
-{
-	int		x_index;
-	int		y_index;
-
-	y_index = -1;
-	while (++y_index < data->width)
-	{
-		x_index = -1;
-		while (++x_index < data->length)
-		{
-			data->p1.x = x_index * data->scale_factor + data->shift_x;
-			data->p1.y = y_index * data->scale_factor + data->shift_y;
-			data->p2.x = (x_index + 1) * data->scale_factor + data->shift_x;
-			data->p2.y = y_index * data->scale_factor + data->shift_y;
-			if (x_index != data->length - 1)
-				bresenham_alg(data->p1, data->p2, data);
-			data->p2.x = x_index * data->scale_factor + data->shift_x;
-			data->p2.y = (y_index + 1) * data->scale_factor + data->shift_y;
-			if (y_index != data->width - 1)
-				bresenham_alg(data->p1, data->p2, data);
-		}
-	}
-	return (0);
-}
 
 int	keyrelease_checker(int keysym)
 {
 	printf("Keyrelease: %d\n", keysym);
+	return (0);
+}
+
+
+void	iso_transform(int *x, int *y, int z)
+{
+	*x = (*x - *y) * cos(0.8);
+	*y = (*x + *y) * sin(0.8) - z;
+}
+
+void	project_iso(int i, int j, t_data *data)
+{
+	data->p1.x = i * data->scale_factor + data->shift_x;
+	data->p1.y = j * data->scale_factor + data->shift_y;
+	iso_transform(&(data->p1.x), &(data->p1.y), data->alt_matrix[j][i]);
+	data->p2.x = (i + 1) * data->scale_factor + data->shift_x;
+	data->p2.y = j * data->scale_factor + data->shift_y;
+	if (i != data->length - 1)
+	{
+		iso_transform(&(data->p2.x), &(data->p2.y), data->alt_matrix[j][i + 1]);
+		bresenham_alg(data->p1, data->p2, data);
+	}
+	data->p2.x = i * data->scale_factor + data->shift_x;
+	data->p2.y = (j + 1) * data->scale_factor + data->shift_y;
+	if (j != data->width - 1)
+	{
+		iso_transform(&(data->p2.x), &(data->p2.y), data->alt_matrix[j + 1][i]);
+		bresenham_alg(data->p1, data->p2, data);
+	}
+}
+
+int	make_grid(t_data *data)
+{
+	int		i;
+	int		j;
+
+	j = -1;
+	while (++j < data->width)
+	{
+		i = -1;
+		while (++i < data->length)
+		{
+			project_iso(i, j, data);
+		}
+	}
 	return (0);
 }
 
