@@ -26,8 +26,14 @@
 # define MLX_ERROR 1
 
 # define ESC_KEY 53
-# define SCROLL_UP 4
-# define SCROLL_DOWN 5
+# define SCROLL_UP 5
+# define SCROLL_DOWN 4
+# define LEFT_ARROW 123
+# define RIGHT_ARROW 124
+# define DOWN_ARROW 125
+# define UP_ARROW 126
+# define KeyReleaseMask 1L<<1
+# define KeyPressMask 1L<<0
 # define RED_PIXEL 0xFF0000
 
 /*
@@ -60,21 +66,23 @@ typedef struct	s_data
 	int		width;
 	int		**alt_matrix;
 	int		scale_factor;
+	int		shift_x;
+	int		shift_y;
 	t_point	p1;
 	t_point	p2;
-	// t_img	img;
 }	t_data;
 
 
 // main.c
-int	render(t_data *data);
+int		render(t_data *data);
+int		make_grid(t_data *data);
 
 // map_parsing.c
 void	parse_map(char **av, t_data *data);
 
 // key_utils.c
-int		esc_window(int keysym, t_data *data);
-int		scaling(int keysym, t_data *data);
+int		handle_keypress(int keysym, t_data *data);
+int		handle_mouse(int keysym, t_data *data);
 
 // drawing_utils.c
 void	bresenham_alg(t_point p1, t_point p2, t_data *data);

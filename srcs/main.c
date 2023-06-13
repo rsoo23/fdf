@@ -41,18 +41,23 @@ the graphics system. Together, they provide the means to display graphics
 
 // gcc srcs/*.c -lmlx -framework OpenGL -framework AppKit
 
-void	init_map(t_data *data)
+void	init_point(t_point *point)
 {
-	data->p1.x = 0;
-	data->p1.y = 0;
-	data->p1.z = 0;
-	data->p2.x = 0;
-	data->p2.y = 0;
-	data->p2.z = 0;
+	point->x = 0;
+	point->y = 0;
+	point->z = 0;
+}
+
+void	init_data(t_data *data)
+{
+	init_point(&(data->p1));
+	init_point(&(data->p2));
+	data->shift_x = 0;
+	data->shift_y = 0;
 	data->scale_factor = 50;
 }
 
-int	render(t_data *data)
+int	make_grid(t_data *data)
 {
 	int		x_index;
 	int		y_index;
@@ -63,17 +68,16 @@ int	render(t_data *data)
 		x_index = -1;
 		while (++x_index < data->length)
 		{
-			data->p1.x = x_index * data->scale_factor;
-			data->p1.y = y_index * data->scale_factor;
-			data->p2.x = (x_index + 1) * data->scale_factor;
-			data->p2.y = y_index * data->scale_factor;
-			printf("p1: (%d, %d) p2: (%d, %d)\n", data->p1.x, data->p1.y, data->p2.x, data->p2.y);
-			bresenham_alg(data->p1, data->p2, data);
-			data->p2.x = x_index * data->scale_factor;
-			data->p2.y = (y_index + 1) * data->scale_factor;
-			printf("p1: (%d, %d) p2: (%d, %d)\n", data->p1.x, data->p1.y, data->p2.x, data->p2.y);
-			bresenham_alg(data->p1, data->p2, data);
-			printf("\n");
+			data->p1.x = x_index * data->scale_factor + data->shift_x;
+			data->p1.y = y_index * data->scale_factor + data->shift_y;
+			data->p2.x = (x_index + 1) * data->scale_factor + data->shift_x;
+			data->p2.y = y_index * data->scale_factor + data->shift_y;
+			if (x_index != data->length - 1)
+				bresenham_alg(data->p1, data->p2, data);
+			data->p2.x = x_index * data->scale_factor + data->shift_x;
+			data->p2.y = (y_index + 1) * data->scale_factor + data->shift_y;
+			if (y_index != data->width - 1)
+				bresenham_alg(data->p1, data->p2, data);
 		}
 	}
 	return (0);
@@ -100,11 +104,10 @@ int	main(int ac, char **av)
 	if (data.win_ptr == NULL)
 		return (1);
 	parse_map(av, &data);
-	init_map(&data);
-	render(&data);
-	// mlx_hook(data.win_ptr, 2, 1, &keyrelease_checker, &data);
-	mlx_hook(data.win_ptr, 2, 1, &esc_window, &data);
-	mlx_hook(data.win_ptr, 4, 0, &scaling, &data);
+	init_data(&data);
+	make_grid(&data);
+	mlx_hook(data.win_ptr, 2, 1, handle_keypress, &data);
+	mlx_hook(data.win_ptr, 4, 0, handle_mouse, &data);
 	mlx_loop(data.mlx_ptr);
 	free(data.mlx_ptr);
 }

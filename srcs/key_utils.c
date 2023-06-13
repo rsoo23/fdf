@@ -6,13 +6,13 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:41:07 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/13 12:20:30 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/13 16:25:26 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-int	esc_window(int keysym, t_data *data)
+int	handle_keypress(int keysym, t_data *data)
 {
 	if (keysym == ESC_KEY)
 	{
@@ -20,16 +20,28 @@ int	esc_window(int keysym, t_data *data)
 		data->win_ptr = NULL;
 		exit(EXIT_SUCCESS);
 	}
-	return (1);
+	else if (keysym == LEFT_ARROW)
+		data->shift_x -= 10;
+	else if (keysym == RIGHT_ARROW)
+		data->shift_x += 10;
+	else if (keysym == DOWN_ARROW)
+		data->shift_y += 10;
+	else if (keysym == UP_ARROW)
+		data->shift_y -= 10;
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	make_grid(data);
+	printf("keypress: %d\n", keysym);
+	return (0);
 }
 
-int	scaling(int keysym, t_data *data)
+int	handle_mouse(int keysym, t_data *data)
 {
+	return (0);
 	if (keysym == SCROLL_UP)
-		data->scale_factor += 20;
+		data->scale_factor += 10;
 	else if (keysym == SCROLL_DOWN && data->scale_factor > 0)
-		data->scale_factor -= 20;
+		data->scale_factor -= 10;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	render(data);
-	return (1);
+	make_grid(data);
+	printf("keypress: %d\n", keysym);
 }
