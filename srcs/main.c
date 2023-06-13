@@ -41,55 +41,39 @@ the graphics system. Together, they provide the means to display graphics
 
 // gcc srcs/*.c -lmlx -framework OpenGL -framework AppKit
 
-void	bresenham_line_draw(t_point p1, t_point p2, t_data *data)
+void	init_map(t_data *data)
 {
-	int	diff_x;
-	int	diff_y;
-	int	decision_var;
-
-	diff_x = p2.x - p1.x;
-	diff_y = p2.y - p1.y;
-	decision_var = 2 * diff_y - diff_x;
-	while (p1.x <= p2.x)
-	{
-		mlx_pixel_put(data->mlx_ptr, data->win_ptr, p1.x, p1.y, RED_PIXEL);
-		p1.x++;
-		if (decision_var < 0)
-			decision_var += 2 * diff_y;
-		else
-		{
-			decision_var += 2 * (diff_y - diff_x);
-			p1.y++;
-		}
-	}
-}
-
-void	init_points(t_point *p1, t_point *p2)
-{
-	p1->x = 0;
-	p1->y = 0;
-	p2->x = 0;
-	p2->y = 0;
+	data->p1.x = 0;
+	data->p1.y = 0;
+	data->p1.z = 0;
+	data->p2.x = 0;
+	data->p2.y = 0;
+	data->p2.z = 0;
+	data->scale_factor = 50;
 }
 
 int	render(t_data *data)
 {
-	t_point p1;
-	t_point p2;
 	int		x_index;
 	int		y_index;
 
-	init_points(&p1, &p2);
-	x_index = -1;
 	y_index = -1;
 	while (++y_index < data->width)
 	{
+		x_index = -1;
 		while (++x_index < data->length)
 		{
-			p2.x = x_index + 1;
-			bresenham_line_draw(p1, p2, data);
-			p2.y = y_index + 1;
-			bresenham_line_draw(p1, p2, data);
+			data->p1.x = x_index * data->scale_factor;
+			data->p1.y = y_index * data->scale_factor;
+			data->p2.x = (x_index + 1) * data->scale_factor;
+			data->p2.y = y_index * data->scale_factor;
+			printf("p1: (%d, %d) p2: (%d, %d)\n", data->p1.x, data->p1.y, data->p2.x, data->p2.y);
+			bresenham_alg(data->p1, data->p2, data);
+			data->p2.x = x_index * data->scale_factor;
+			data->p2.y = (y_index + 1) * data->scale_factor;
+			printf("p1: (%d, %d) p2: (%d, %d)\n", data->p1.x, data->p1.y, data->p2.x, data->p2.y);
+			bresenham_alg(data->p1, data->p2, data);
+			printf("\n");
 		}
 	}
 	return (0);
@@ -112,12 +96,12 @@ int	main(int ac, char **av)
     data.mlx_ptr = mlx_init();
 	if (data.mlx_ptr == NULL)
 		return (1);
-	// (void)av;
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
 	if (data.win_ptr == NULL)
 		return (1);
 	parse_map(av, &data);
-	mlx_loop_hook(data.mlx_ptr, &render, &data);
+	init_map(&data);
+	render(&data);
 	// mlx_hook(data.win_ptr, 2, 1, &keyrelease_checker, &data);
 	mlx_hook(data.win_ptr, 2, 1, &esc_window, &data);
 	mlx_hook(data.win_ptr, 4, 0, &scaling, &data);

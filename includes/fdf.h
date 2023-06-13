@@ -34,14 +34,21 @@
 mlx_img: refers to the address mlx_new_image returns
 bpps: bits per pixel
 */
-typedef struct	s_img
+// typedef struct	s_img
+// {
+// 	void	*mlx_img;
+// 	char	*addr;
+// 	int		bpp;
+// 	int		line_len;
+// 	int		endian;
+// }	t_img;
+
+typedef struct	s_point
 {
-	void	*mlx_img;
-	char	*addr;
-	int		bpp;
-	int		line_len;
-	int		endian;
-}	t_img;
+	int	x;
+	int	y;
+	int	z;
+}	t_point;
 
 typedef struct	s_data
 {
@@ -53,23 +60,23 @@ typedef struct	s_data
 	int		width;
 	int		**alt_matrix;
 	int		scale_factor;
-	t_img	img;
+	t_point	p1;
+	t_point	p2;
+	// t_img	img;
 }	t_data;
 
-typedef struct	s_point
-{
-	int	x;
-	int	y;
-	int	z;
-}	t_point;
 
 // main.c
+int	render(t_data *data);
 
 // map_parsing.c
 void	parse_map(char **av, t_data *data);
 
 // key_utils.c
 int		esc_window(int keysym, t_data *data);
-// int		scaling(int keysym, t_data *data);
+int		scaling(int keysym, t_data *data);
+
+// drawing_utils.c
+void	bresenham_alg(t_point p1, t_point p2, t_data *data);
 
 #endif
