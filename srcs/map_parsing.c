@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/11 10:12:52 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/13 10:10:14 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	assign_altitude_matrix(t_data *data)
 	int		j;
 
 	i = 0;
-	data->alt_matrix = malloc(sizeof(int *) * (data->width + 1));
+	data->alt_matrix = malloc(sizeof(int *) * (data->width + 2));
 	if (!(data->alt_matrix))
 		return ;
 	data->fd = open(data->infile, O_RDONLY);
@@ -42,6 +42,7 @@ static void	assign_altitude_matrix(t_data *data)
 		line = get_next_line(data->fd);
 		i++;
 	}
+	data->alt_matrix[i] = 0;
 	free(line);
 	close(data->fd);
 }
@@ -53,20 +54,22 @@ static void	get_map_length(char *line, t_data *data)
 
 	i = 0;
 	space_count = 0;
-	while (line[i] != '\n')
+	while (line[i] != '\0')
 	{
-		while (ft_isdigit(line[i]))
+		i++;
+		while (ft_isdigit(line[i]) && line[i])
 			i++;
 		if (line[i] == ' ')
 			space_count++;
-		i++;
 	}
+	free(line);
 	if (data->length == 0)
 		data->length = space_count;
 	else if (data->length != space_count)
 	{
 		perror("Map Length Error");
-		exit(FAILURE);
+		free(data);
+		exit(EXIT_FAILURE);
 	}
 }
 
@@ -85,9 +88,9 @@ static void	get_map_dimensions(t_data *data)
 	{
 		data->width++;
 		get_map_length(line, data);
-		free(line);
 		line = get_next_line(data->fd);
 	}
+	free(line);
 }
 
 void	parse_map(char **av, t_data *data)
@@ -98,5 +101,18 @@ void	parse_map(char **av, t_data *data)
 	get_map_dimensions(data);
 	printf("length: %d, width: %d\n", data->length, data->width);
 	assign_altitude_matrix(data);
+	// int y = 0;
+	// int x;
+	// while (data->alt_matrix[y])
+	// {
+	// 	x = 0;
+	// 	while (x < data->length)
+	// 	{
+	// 		printf("%d ", data->alt_matrix[y][x]);
+	// 		x++;
+	// 	}
+	// 	printf("\n");
+	// 	y++;
+	// }
 	free(data->infile);
 }

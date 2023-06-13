@@ -11,6 +11,7 @@
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
+
 /*
 Notes:
 mlx_new_window(mlx, width, height, name): 
@@ -38,19 +39,7 @@ the graphics system. Together, they provide the means to display graphics
  and create interactive experiences in a game or program.
 */
 
-// clang main.c -lX11 -lXext -lmlx
-// gcc main.c -lmlx -framework OpenGL -framework AppKit
-
-int	esc_window(int keysym, t_data *data)
-{
-	if (keysym == ESC_KEY)
-	{
-		mlx_destroy_window(data->mlx_ptr, data->win_ptr);
-		data->win_ptr = NULL;
-		exit(EXIT_SUCCESS);
-	}
-	return (1);
-}
+// gcc srcs/*.c -lmlx -framework OpenGL -framework AppKit
 
 void	bresenham_line_draw(t_point p1, t_point p2, t_data *data)
 {
@@ -91,17 +80,17 @@ int	render(t_data *data)
 	int		y_index;
 
 	init_points(&p1, &p2);
-	x_index = 0;
-	y_index = 0;
-	while (y_index < data->width)
+	x_index = -1;
+	y_index = -1;
+	while (++y_index < data->width)
 	{
-		while (x_index < data->length)
+		while (++x_index < data->length)
 		{
+			p2.x = x_index + 1;
 			bresenham_line_draw(p1, p2, data);
+			p2.y = y_index + 1;
 			bresenham_line_draw(p1, p2, data);
-			x_index++;
 		}
-		y_index++;
 	}
 	return (0);
 }
@@ -131,6 +120,7 @@ int	main(int ac, char **av)
 	mlx_loop_hook(data.mlx_ptr, &render, &data);
 	// mlx_hook(data.win_ptr, 2, 1, &keyrelease_checker, &data);
 	mlx_hook(data.win_ptr, 2, 1, &esc_window, &data);
+	mlx_hook(data.win_ptr, 4, 0, &scaling, &data);
 	mlx_loop(data.mlx_ptr);
 	free(data.mlx_ptr);
 }
