@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:24:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/14 18:07:43 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/14 21:10:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,6 @@ void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 	float	diff_y;
 	float	decision_var;
 
-	// if (p2.x < p1.x)
-	// 	swap_points(&p1, &p2);
 	diff_x = p2.x - p1.x;
 	diff_y = p2.y - p1.y;
 	printf("\x1b[34mdiff_x %f diff_y %f\n\n" "\x1b[0m", diff_x, diff_y);
@@ -79,20 +77,4 @@ void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 			p1.y++;
 		}
 	}
-	// else
-	// {
-	// 	decision_var = 2 * diff_x - diff_y;
-	// 	while (p1.y <= p2.y)
-	// 	{
-	// 		mlx_pixel_put(data->mlx_ptr, data->win_ptr, p1.x, p1.y, data->color);
-	// 		p1.y++;
-	// 		if (decision_var < 0)
-	// 			decision_var += 2 * diff_x;
-	// 		else
-	// 		{
-	// 			decision_var += 2 * (diff_x - diff_y);
-	// 			p1.x++;
-	// 		}
-	// 	}
-	// }
 }

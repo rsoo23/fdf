@@ -60,7 +60,7 @@ void	init_data(t_data *data)
 	init_points(data);
 	data->shift_x = MID_X - 200;
 	data->shift_y = 100;
-	data->scale_factor = 70;
+	data->scale_factor = 110;
 	data->color = WHITE;
 	data->angle = 1.0;
 	data->z_height = 0;
@@ -114,8 +114,8 @@ void	draw_vertical_line(int i, int j, t_data *data)
 	data->p2->y = j + 1;
 	data->p2->z = data->alt_matrix[j + 1][i];
 	scale_points(data);
-	// iso_transform_point(data->p1, data->angle);
-	// iso_transform_point(data->p2, data->angle);
+	iso_transform_point(data->p1, data->angle);
+	iso_transform_point(data->p2, data->angle);
 	shift(data);
 	printf("ori x: %f, y: %f, z: %f\n", data->p1->x, data->p1->y, data->p1->z);
 	printf("down x: %f, y: %f, z: %f\n", data->p2->x, data->p2->y, data->p2->z);
@@ -136,12 +136,12 @@ void	draw_horizontal_line(int i, int j, t_data *data)
 	data->p2->z = data->alt_matrix[j][i + 1];
 	// z_height(data);
 	scale_points(data);
-	// iso_transform_point(data->p1, data->angle);
-	// iso_transform_point(data->p2, data->angle);
+	iso_transform_point(data->p1, data->angle);
+	iso_transform_point(data->p2, data->angle);
 	shift(data);
 	printf("ori x: %f, y: %f, z: %f\n", data->p1->x, data->p1->y, data->p1->z);
 	printf("right x: %f, y: %f, z: %f\n", data->p2->x, data->p2->y, data->p2->z);
-	if (data->p2->z > 0)
+	if (data->p1->z > 0 || data->p2->z > 0)
 		data->color = PURPLE;
 	else
 		data->color = WHITE;
@@ -162,8 +162,8 @@ int	make_grid(t_data *data)
 		{
 			if (x_ind < data->length)
 				draw_horizontal_line(x_ind, y_ind, data);
-			if (y_ind < data->width)
-				draw_vertical_line(x_ind, y_ind, data);
+			// if (y_ind < data->width)
+			// 	draw_vertical_line(x_ind, y_ind, data);
 		}
 	}
 	return (0);

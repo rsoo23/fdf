@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:41:07 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/14 17:56:32 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/14 20:56:53 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,17 +21,17 @@ int	handle_keypress(int keysym, t_data *data)
 		exit(EXIT_SUCCESS);
 	}
 	else if (keysym == LEFT_ARROW)
-		data->shift_x -= 10;
+		data->shift_x -= 30;
 	else if (keysym == RIGHT_ARROW)
-		data->shift_x += 10;
+		data->shift_x += 30;
 	else if (keysym == DOWN_ARROW)
-		data->shift_y += 10;
+		data->shift_y += 30;
 	else if (keysym == UP_ARROW)
-		data->shift_y -= 10;
+		data->shift_y -= 30;
 	else if (keysym == C_KEY)
-		data->scale_factor += 1;
+		data->scale_factor += 10;
 	else if (keysym == X_KEY && data->scale_factor > 0)
-		data->scale_factor -= 1;
+		data->scale_factor -= 10;
 	// else if (keysym == R_KEY)
 	// else if (keysym == E_KEY)
 	// else if (keysym == G_KEY)
