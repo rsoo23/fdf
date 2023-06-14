@@ -6,17 +6,30 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 12:24:24 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/13 18:21:51 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/14 09:48:28 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
+// static void	swap_coord(t_point *p1, t_point *p2)
+// {
+// 	int	temp_x;
+// 	int	temp_y;
+
+// 	temp_x = p1->x;
+// 	temp_y = p1->y;
+// 	p1->x = p2->x;
+// 	p1->y = p2->y;
+// 	p2->x = temp_x;
+// 	p2->y = temp_y;
+// }
+
 void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 {
-	int	diff_x;
-	int	diff_y;
-	int	decision_var;
+	float	diff_x;
+	float	diff_y;
+	float	decision_var;
 
 	diff_x = p2.x - p1.x;
 	diff_y = p2.y - p1.y;
@@ -25,7 +38,7 @@ void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 		decision_var = 2 * diff_y - diff_x;
 		while (p1.x <= p2.x)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, p1.x, p1.y, WHITE_PIXEL);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, p1.x, p1.y, data->color);
 			p1.x++;
 			if (decision_var < 0)
 				decision_var += 2 * diff_y;
@@ -41,7 +54,7 @@ void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 		decision_var = 2 * diff_x - diff_y;
 		while (p1.y <= p2.y)
 		{
-			mlx_pixel_put(data->mlx_ptr, data->win_ptr, p1.x, p1.y, WHITE_PIXEL);
+			mlx_pixel_put(data->mlx_ptr, data->win_ptr, p1.x, p1.y, data->color);
 			p1.y++;
 			if (decision_var < 0)
 				decision_var += 2 * diff_x;

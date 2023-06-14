@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:41:07 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/13 18:39:11 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/14 11:36:11 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,20 +28,26 @@ int	handle_keypress(int keysym, t_data *data)
 		data->shift_y += 10;
 	else if (keysym == UP_ARROW)
 		data->shift_y -= 10;
-	else if (keysym == 8)
-		data->scale_factor += 5;
-	else if (keysym == 7 && data->scale_factor > 0)
-		data->scale_factor -= 5;
+	else if (keysym == C_KEY)
+		data->scale_factor += 1;
+	else if (keysym == X_KEY && data->scale_factor > 0)
+		data->scale_factor -= 1;
+	// else if (keysym == R_KEY)
+	// else if (keysym == E_KEY)
+	else if (keysym == G_KEY)
+		data->z_height += 5;
+	else if (keysym == F_KEY)
+		data->z_height -= 5;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	make_grid(data);
 	printf("keypress: %d\n", keysym);
 	return (0);
 }
 
-int	handle_mouse(int keysym, t_data *data)
-{
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	make_grid(data);
-	printf("keypress: %d\n", keysym);
-	return (0);
-}
+// int	handle_mouse(int keysym, t_data *data)
+// {
+// 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+// 	make_grid(data);
+// 	printf("keypress: %d\n", keysym);
+// 	return (0);
+// }

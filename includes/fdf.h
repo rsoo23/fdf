@@ -19,8 +19,6 @@
 
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define START_X 0             // value: 0
-# define START_Y WINDOW_HEIGHT // value: 1080
 # define MID_X WINDOW_WIDTH / 2
 # define MID_Y WINDOW_HEIGHT / 2
 # define MLX_ERROR 1
@@ -32,9 +30,16 @@
 # define RIGHT_ARROW 124
 # define DOWN_ARROW 125
 # define UP_ARROW 126
+# define C_KEY 8
+# define X_KEY 7
+# define G_KEY 5
+# define F_KEY 3
+# define R_KEY 15
+# define E_KEY 14
 # define KeyReleaseMask 1L<<1
 # define KeyPressMask 1L<<0
-# define WHITE_PIXEL 0xFFFFFF
+# define WHITE 0xFFFFFF
+# define PURPLE 0xFF00FF
 
 /*
 mlx_img: refers to the address mlx_new_image returns
@@ -51,25 +56,28 @@ bpps: bits per pixel
 
 typedef struct	s_point
 {
-	int	x;
-	int	y;
-	int	z;
+	float	x;
+	float	y;
+	float	z;
 }	t_point;
 
 typedef struct	s_data
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
-	char	*infile;
-	int		fd;
-	int		length;
-	int		width;
-	int		**alt_matrix;
-	int		scale_factor;
-	int		shift_x;
-	int		shift_y;
-	t_point	p1;
-	t_point	p2;
+	void			*mlx_ptr;
+	void			*win_ptr;
+	char			*infile;
+	int				fd;
+	int				length;
+	int				width;
+	int				**alt_matrix;
+	int				scale_factor;
+	int				shift_x;
+	int				shift_y;
+	int				z_height;
+	t_point			*p1;
+	t_point			*p2;
+	unsigned int	color;
+	float			angle;
 }	t_data;
 
 
@@ -82,7 +90,7 @@ void	parse_map(char **av, t_data *data);
 
 // key_utils.c
 int		handle_keypress(int keysym, t_data *data);
-int		handle_mouse(int keysym, t_data *data);
+// int		handle_mouse(int keysym, t_data *data);
 
 // drawing_utils.c
 void	bresenham_alg(t_point p1, t_point p2, t_data *data);
