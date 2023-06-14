@@ -96,59 +96,58 @@ void	z_height(t_data *data)
 	{
 		data->p2->z += data->z_height;
 	}
-	if (data->p1->z > 0 && data->p2->z > 0)
+	else if (data->p1->z > 0 && data->p2->z > 0)
 	{
 		data->p1->z += data->z_height;
 		data->p2->z += data->z_height;
 	}
-	if (data->p1->z > 0 && data->p2->z == 0)
+	else if (data->p1->z > 0 && data->p2->z == 0)
 		data->p1->z += data->z_height;
-}
-
-void	draw_horizontal_line(int i, int j, t_data *data)
-{
-	if (i != data->length - 1)
-	{
-		data->p1->x = i;
-		data->p1->y = j;
-		data->p1->z = data->alt_matrix[j][i];
-		data->p2->x = i + 1;
-		data->p2->y = j;
-		data->p2->z = data->alt_matrix[j][i + 1];
-		z_height(data);
-		scale_points(data);
-		iso_transform_point(data->p1, data->angle);
-		iso_transform_point(data->p2, data->angle);
-		shift(data);
-		if (data->p2->z > 0)
-			data->color = PURPLE;
-		else
-			data->color = WHITE;
-		bresenham_alg(*(data->p1), *(data->p2), data);
-	}
 }
 
 void	draw_vertical_line(int i, int j, t_data *data)
 {
-	if (j != data->width - 1)
-	{
-		data->p2->x = i;
-		data->p2->y = j;
-		data->p2->z = data->alt_matrix[j][i];
-		iso_transform_point(data->p2, data->angle);
-		data->p1->x = i;
-		data->p1->y = j + 1;
-		data->p1->z = data->alt_matrix[j + 1][i];
-		scale_points(data);
-		iso_transform_point(data->p1, data->angle);
-		shift(data);
-		if (data->p2->z > 0)
-			data->color = PURPLE;
-		else
-			data->color = WHITE;
-		bresenham_alg(*(data->p1), *(data->p2), data);
-	}
+	data->p1->x = i;
+	data->p1->y = j;
+	data->p1->z = data->alt_matrix[j][i];
+	data->p2->x = i;
+	data->p2->y = j + 1;
+	data->p2->z = data->alt_matrix[j + 1][i];
+	scale_points(data);
+	// iso_transform_point(data->p1, data->angle);
+	// iso_transform_point(data->p2, data->angle);
+	shift(data);
+	printf("ori x: %f, y: %f, z: %f\n", data->p1->x, data->p1->y, data->p1->z);
+	printf("down x: %f, y: %f, z: %f\n", data->p2->x, data->p2->y, data->p2->z);
+	if (data->p2->z > 0)
+		data->color = PURPLE;
+	else
+		data->color = WHITE;
+	bresenham_alg(*(data->p1), *(data->p2), data);
 }
+
+void	draw_horizontal_line(int i, int j, t_data *data)
+{
+	data->p1->x = i;
+	data->p1->y = j;
+	data->p1->z = data->alt_matrix[j][i];
+	data->p2->x = i + 1;
+	data->p2->y = j;
+	data->p2->z = data->alt_matrix[j][i + 1];
+	// z_height(data);
+	scale_points(data);
+	// iso_transform_point(data->p1, data->angle);
+	// iso_transform_point(data->p2, data->angle);
+	shift(data);
+	printf("ori x: %f, y: %f, z: %f\n", data->p1->x, data->p1->y, data->p1->z);
+	printf("right x: %f, y: %f, z: %f\n", data->p2->x, data->p2->y, data->p2->z);
+	if (data->p2->z > 0)
+		data->color = PURPLE;
+	else
+		data->color = WHITE;
+	bresenham_alg(*(data->p1), *(data->p2), data);
+}
+
 
 int	make_grid(t_data *data)
 {
@@ -156,13 +155,15 @@ int	make_grid(t_data *data)
 	int	y_ind;
 
 	y_ind = -1;
-	while (++y_ind < data->width)
+	while (++y_ind <= data->width)
 	{
 		x_ind = -1;
-		while (++x_ind < data->length)
+		while (++x_ind <= data->length)
 		{
-			draw_horizontal_line(x_ind, y_ind, data);
-			draw_vertical_line(x_ind, y_ind, data);
+			if (x_ind < data->length)
+				draw_horizontal_line(x_ind, y_ind, data);
+			if (y_ind < data->width)
+				draw_vertical_line(x_ind, y_ind, data);
 		}
 	}
 	return (0);

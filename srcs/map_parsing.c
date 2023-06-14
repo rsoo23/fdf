@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/13 11:44:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/14 20:23:42 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,10 +86,11 @@ static void	get_map_dimensions(t_data *data)
 	line = get_next_line(data->fd);
 	while (line)
 	{
-		data->width++;
 		get_map_length(line, data);
 		line = get_next_line(data->fd);
+		data->width++;
 	}
+	data->width--;
 	free(line);
 }
 
@@ -99,7 +100,7 @@ void	parse_map(char **av, t_data *data)
 	data->length = 0;
 	data->width = 0;
 	get_map_dimensions(data);
-	printf("length: %d, width: %d\n", data->length, data->width);
 	assign_altitude_matrix(data);
+	printf("length: %d, width: %d\n", data->length, data->width);
 	free(data->infile);
 }

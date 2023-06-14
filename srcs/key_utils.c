@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/13 08:41:07 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/14 11:36:11 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/14 17:56:32 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,14 @@ int	handle_keypress(int keysym, t_data *data)
 		data->scale_factor -= 1;
 	// else if (keysym == R_KEY)
 	// else if (keysym == E_KEY)
+	// else if (keysym == G_KEY)
+	// 	data->z_height += 5;
+	// else if (keysym == F_KEY)
+	// 	data->z_height -= 5;
 	else if (keysym == G_KEY)
-		data->z_height += 5;
+		data->angle += 0.1;
 	else if (keysym == F_KEY)
-		data->z_height -= 5;
+		data->angle -= 0.1;
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	make_grid(data);
 	printf("keypress: %d\n", keysym);
