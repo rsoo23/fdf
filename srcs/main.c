@@ -60,112 +60,18 @@ void	init_data(t_data *data)
 	init_points(data);
 	data->shift_x = MID_X - 200;
 	data->shift_y = 100;
-	data->scale_factor = 110;
+	data->scale_factor = 100;
 	data->color = WHITE;
 	data->angle = 1.0;
-	data->z_height = 0;
+	data->z_scale = 1;
 }
 
-void	iso_transform_point(t_point *p, float angle)
+int	render(t_data *data)
 {
-	p->x = (p->x - p->y) * cos(angle);
-	p->y = (p->x + p->y) * sin(angle) - p->z;
-}
-
-void	scale_points(t_data *data)
-{
-	data->p1->x *= data->scale_factor;
-	data->p1->y *= data->scale_factor;
-	// data->p1->z *= data->scale_factor;
-	data->p2->x *= data->scale_factor;
-	data->p2->y *= data->scale_factor;
-	// data->p2->z *= data->scale_factor;
-}
-
-void	shift(t_data *data)
-{
-	data->p1->x += data->shift_x;
-	data->p2->x += data->shift_x;
-	data->p1->y += data->shift_y;
-	data->p2->y += data->shift_y;
-}
-
-// void	z_height(t_data *data)
-// {
-// 	if (data->p1->z == 0 && data->p2->z > 0)
-// 	{
-// 		data->p2->z += data->z_height;
-// 	}
-// 	else if (data->p1->z > 0 && data->p2->z > 0)
-// 	{
-// 		data->p1->z += data->z_height;
-// 		data->p2->z += data->z_height;
-// 	}
-// 	else if (data->p1->z > 0 && data->p2->z == 0)
-// 		data->p1->z += data->z_height;
-// }
-
-void	draw_vertical_line(int i, int j, t_data *data)
-{
-	data->p1->x = i;
-	data->p1->y = j;
-	data->p1->z = data->alt_matrix[j][i];
-	data->p2->x = i;
-	data->p2->y = j + 1;
-	data->p2->z = data->alt_matrix[j + 1][i];
-	scale_points(data);
-	iso_transform_point(data->p1, data->angle);
-	iso_transform_point(data->p2, data->angle);
-	shift(data);
-	printf("ori x: %d, y: %d, z: %d\n", data->p1->x, data->p1->y, data->p1->z);
-	printf("down x: %d, y: %d, z: %d\n", data->p2->x, data->p2->y, data->p2->z);
-	if (data->p2->z > 0)
-		data->color = PURPLE;
-	else
-		data->color = WHITE;
-	bresenham_alg(*(data->p1), *(data->p2), data);
-}
-
-void	draw_horizontal_line(int i, int j, t_data *data)
-{
-	data->p1->x = i;
-	data->p1->y = j;
-	data->p1->z = data->alt_matrix[j][i];
-	data->p2->x = i + 1;
-	data->p2->y = j;
-	data->p2->z = data->alt_matrix[j][i + 1];
-	// z_height(data);
-	scale_points(data);
-	iso_transform_point(data->p1, data->angle);
-	iso_transform_point(data->p2, data->angle);
-	shift(data);
-	printf("ori x: %d, y: %d, z: %d\n", data->p1->x, data->p1->y, data->p1->z);
-	printf("right x: %d, y: %d, z: %d\n", data->p2->x, data->p2->y, data->p2->z);
-	if (data->p1->z > 0 || data->p2->z > 0)
-		data->color = PURPLE;
-	else
-		data->color = WHITE;
-	bresenham_alg(*(data->p1), *(data->p2), data);
-}
-
-
-int	make_grid(t_data *data)
-{
-	int	x_ind;
-	int	y_ind;
-
-	y_ind = -1;
-	while (++y_ind <= data->width)
-	{
-		x_ind = -1;
-		while (++x_ind <= data->length)
-		{
-			if (x_ind < data->length)
-				draw_horizontal_line(x_ind, y_ind, data);
-			if (y_ind < data->width)
-				draw_vertical_line(x_ind, y_ind, data);
-		}
-	}
+	render_background(&data->img, WHITE);
+	render_map(data);
+	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	return (0);
 }
 
@@ -183,11 +89,14 @@ int	main(int ac, char **av)
 	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
 	if (data.win_ptr == NULL)
 		return (1);
+	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
 	init_data(&data);
 	parse_map(av, &data);
-	make_grid(&data);
+	mlx_loop_hook(data.mlx_ptr, render, &data);
 	mlx_hook(data.win_ptr, 2, 1, handle_keypress, &data);
 	mlx_loop(data.mlx_ptr);
+	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	free(data.mlx_ptr);
 }
 
@@ -214,4 +123,14 @@ Isometric Projection Formulas:
 
 Translation / Shifting
 - use mlx_clear_window
+
+Task List:
+- use images
+- extra projection
+- fix the scaling
+- rotatinon
+- color gradient
+- menu
+- z_altitude scaling
+- correct freeing 
 */

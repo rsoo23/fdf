@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/14 20:23:42 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/15 12:51:56 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,6 @@ static void	get_map_length(char *line, t_data *data)
 	else if (data->length != space_count)
 	{
 		perror("Map Length Error");
-		free(data);
 		exit(EXIT_FAILURE);
 	}
 }
@@ -101,6 +100,6 @@ void	parse_map(char **av, t_data *data)
 	data->width = 0;
 	get_map_dimensions(data);
 	assign_altitude_matrix(data);
-	printf("length: %d, width: %d\n", data->length, data->width);
+	// printf("length: %d, width: %d\n", data->length, data->width);
 	free(data->infile);
 }

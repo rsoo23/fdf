@@ -17,12 +17,15 @@
 # include "../minilibx_macos/mlx.h"
 # include <math.h>
 
+// positions
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
 # define MID_X WINDOW_WIDTH / 2
 # define MID_Y WINDOW_HEIGHT / 2
+
 # define MLX_ERROR 1
 
+// keys
 # define ESC_KEY 53
 # define SCROLL_UP 5
 # define SCROLL_DOWN 4
@@ -36,23 +39,24 @@
 # define F_KEY 3
 # define R_KEY 15
 # define E_KEY 14
-# define KeyReleaseMask 1L<<1
-# define KeyPressMask 1L<<0
+
+// colors
 # define WHITE 0xFFFFFF
 # define PURPLE 0xFF00FF
+# define BLACK 0x000000
 
 /*
 mlx_img: refers to the address mlx_new_image returns
 bpps: bits per pixel
 */
-// typedef struct	s_img
-// {
-// 	void	*mlx_img;
-// 	char	*addr;
-// 	int		bpp;
-// 	int		line_len;
-// 	int		endian;
-// }	t_img;
+typedef struct	s_img
+{
+	void	*mlx_img;
+	char	*addr;
+	int		bpp;
+	int		line_len;
+	int		endian;
+}	t_img;
 
 typedef struct	s_point
 {
@@ -83,19 +87,18 @@ typedef struct	s_data
 	int				scale_factor;
 	int				shift_x;
 	int				shift_y;
-	int				z_height;
-	t_point			*p1;
-	t_point			*p2;
+	int				z_scale;
 	unsigned int	color;
 	float			angle;
+	t_point			*p1;
+	t_point			*p2;
 	t_bres			bres;
+	t_img			img;
 }	t_data;
-
-
 
 // main.c
 int		render(t_data *data);
-int		make_grid(t_data *data);
+void	make_grid(t_data *data);
 
 // map_parsing.c
 void	parse_map(char **av, t_data *data);
@@ -105,6 +108,18 @@ int		handle_keypress(int keysym, t_data *data);
 // int		handle_mouse(int keysym, t_data *data);
 
 // drawing_utils.c
-void	bresenham_alg(t_point p1, t_point p2, t_data *data);
+void	draw_horizontal(int i, int j, t_data *data);
+void	draw_vertical(int i, int j, t_data *data);
+
+// transform_utils_1.c
+void	iso_transform_point(t_point *p, float angle);
+void	scale_points(t_data *data);
+void	shift(t_data *data);
+void	z_height(t_data *data);
+
+// rendering.c
+void	img_pix_put(t_img *img, int x, int y, int color);
+void	render_background(t_img *img, int color);
+void	render_map(t_data *data);
 
 #endif
