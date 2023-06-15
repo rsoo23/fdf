@@ -56,10 +56,20 @@ bpps: bits per pixel
 
 typedef struct	s_point
 {
-	float	x;
-	float	y;
-	float	z;
+	int	x;
+	int	y;
+	int	z;
 }	t_point;
+
+typedef struct s_bres
+{
+	int		dx;
+	int		dy;
+	int		err;
+	int		err2;
+	int		sx;
+	int		sy;
+}	t_bres;
 
 typedef struct	s_data
 {
@@ -78,7 +88,9 @@ typedef struct	s_data
 	t_point			*p2;
 	unsigned int	color;
 	float			angle;
+	t_bres			bres;
 }	t_data;
+
 
 
 // main.c
