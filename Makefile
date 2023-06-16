@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 08:56:06 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/16 09:00:51 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/16 13:39:01 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fdiagnostics-color=always -g3
 RM = rm -rf
 
 SRCS_DIR = srcs/
-SRCS = main color map_parsing hooks map_drawing transform_utils_1 rendering
+SRCS = main color map_parsing hooks map_drawing transform_utils_1 transform_utils_2 rendering
 SRCS_CFILES = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS_CFILES:.c=.o)
 
@@ -30,7 +30,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make bonus -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LIBFT_DIR)/$(LIBFT)
+	$(CC) $(CFLAGS) $(OBJS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LIBFT_DIR)/$(LIBFT)
 
 clean:
 	make clean -C $(LIBFT_DIR)

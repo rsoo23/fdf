@@ -60,10 +60,15 @@ void	init_data(t_data *data)
 	init_points(data);
 	data->shift_x = MID_X - 200;
 	data->shift_y = 100;
-	data->scale_factor = 100;
+	data->scale_factor = 50;
 	data->color = WHITE;
 	data->angle = 1.0;
 	data->z_scale = 1;
+	data->proj = 'i';
+	data->rot_angle_x = 0;
+	data->rot_angle_y = 0;
+	data->rot_angle_z = 0;
+	data->focal_len = 20;
 }
 
 int	render(t_data *data)
@@ -71,7 +76,6 @@ int	render(t_data *data)
 	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len, &data->img.endian);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	// render_background(&data->img, WHITE);
 	render_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
@@ -92,6 +96,7 @@ void	fdf_hooks(t_data *data)
 {
 	mlx_loop_hook(data->mlx_ptr, render, data);
 	mlx_hook(data->win_ptr, 2, 1, handle_keypress, data);
+	// mlx_hook(data->win_ptr, 4, 0, handle_mouse, data);
 	mlx_loop(data->mlx_ptr);
 }
 
@@ -103,7 +108,6 @@ int	main(int ac, char **av)
 		return (1);
 	init_fdf(av, &data);
 	fdf_hooks(&data);
-	// mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	free(data.mlx_ptr);
 }
 
@@ -126,18 +130,18 @@ Set color for different altitudes
 Isometric Projection Formulas:
  - x' = (x - y) * cos(angle)
  - y' = (x + y) * sin(angle) - z
-- the values of x' and y' are in 3d, default angle = 0.8
+- the values of x' and y' are in 3d
 
 Translation / Shifting
 - use mlx_clear_window
 
 Task List:
-- use images
-- extra projection
-- fix the scaling
-- rotatinon
-- color gradient
-- menu
-- z_altitude scaling
-- correct freeing 
+- [x] use images
+- [ ] extra projection
+- [x] fix the scaling
+- [ ] rotation
+- [ ] z_altitude scaling
+- [ ] correct freeing 
+- [ ] color gradient
+- [ ] menu
 */

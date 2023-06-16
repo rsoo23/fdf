@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/16 09:36:02 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/16 16:56:14 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 		img_pix_put(&data->img, p1.x, p1.y, data->color);
 		if (p1.x == p2.x && p1.y == p2.y)	
 			break ;
-		if (p1.x >= WINDOW_WIDTH || p1.y >= WINDOW_HEIGHT)
-			break ;
 		data->bres.err2 = 2 * data->bres.err;
 		if (data->bres.err2 >= data->bres.dy)
 		{
@@ -55,13 +53,15 @@ static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 
 static void	draw_line(t_data *data)
 {
-	z_height(data);
+	z_scale(data);
 	scale_points(data);
-	iso_transform_point(data->p1, data->angle);
-	iso_transform_point(data->p2, data->angle);
+	if (data->proj == 'i')
+		iso_transform(data->p1, data->p2, data->angle);
+	if (data->proj == 'p')
+		perspec_transform(data->p1, data->p2, data->focal_len);
+	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
+		rotation(data);
 	shift(data);
-	// printf("x: %d, y: %d, z: %d\n", data->p1->x, data->p1->y, data->p1->z);
-	// printf("x: %d, y: %d, z: %d\n", data->p2->x, data->p2->y, data->p2->z);
 	if (data->p1->z != 0 || data->p2->z != 0)
 		data->color = PURPLE;
 	else

@@ -6,49 +6,42 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:04:36 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/15 12:34:09 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/16 18:24:04 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-void	iso_transform_point(t_point *p, float angle)
+void	z_scale(t_data *data)
 {
-	p->x = (p->x - p->y) * cos(angle);
-	p->y = (p->x + p->y) * sin(angle) - p->z;
+	data->p1->z *= data->z_scale;
+	data->p2->z *= data->z_scale;
 }
 
 void	scale_points(t_data *data)
 {
 	data->p1->x *= data->scale_factor;
 	data->p1->y *= data->scale_factor;
-	if (data->p1->z != 0)
-		data->p1->z += 10;
+	// if (data->p1->z != 0)
+	// 	data->p1->z -= 10;
 	data->p2->x *= data->scale_factor;
 	data->p2->y *= data->scale_factor;
-	if (data->p2->z != 0)
-		data->p2->z += 10;
+	// if (data->p2->z != 0)
+	// 	data->p2->z -= 10;
 }
 
-void	shift(t_data *data)
+void	iso_transform(t_point *p1, t_point *p2, float angle)
 {
-	data->p1->x += data->shift_x;
-	data->p2->x += data->shift_x;
-	data->p1->y += data->shift_y;
-	data->p2->y += data->shift_y;
+	p1->x = (p1->x - p1->y) * cos(angle);
+	p1->y = (p1->x + p1->y) * sin(angle) - p1->z;
+	p2->x = (p2->x - p2->y) * cos(angle);
+	p2->y = (p2->x + p2->y) * sin(angle) - p2->z;
 }
 
-void	z_height(t_data *data)
+void	perspec_transform(t_point *p1, t_point *p2, float focal_len)
 {
-	if (data->p1->z == 0 && data->p2->z > 0)
-	{
-		data->p2->z *= data->z_scale;
-	}
-	else if (data->p1->z > 0 && data->p2->z > 0)
-	{
-		data->p1->z *= data->z_scale;
-		data->p2->z *= data->z_scale;
-	}
-	else if (data->p1->z > 0 && data->p2->z == 0)
-		data->p1->z *= data->z_scale;
+	p1->x = focal_len * (p1->x / p1->z);
+	p1->y = focal_len * (p1->y / p1->z);
+	p2->x = focal_len * (p2->x / p2->z);
+	p2->y = focal_len * (p2->y / p2->z);
 }
