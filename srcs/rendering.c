@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:16:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/15 21:52:41 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/16 09:54:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,11 @@ void	img_pix_put(t_img *img, int x, int y, int color)
 {
 	char	*pixel;
 
-	pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
-	*(int *)pixel = color;
+	if (x > 0 && y > 0 && x < WINDOW_WIDTH && y < WINDOW_HEIGHT)
+	{
+		pixel = img->addr + (y * img->line_len + x * (img->bpp / 8));
+		*(unsigned int *)pixel = color;
+	}
 }
 
 void	render_background(t_img *img, int color)

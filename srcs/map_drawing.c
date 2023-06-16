@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_rendering.c                                    :+:      :+:    :+:   */
+/*   map_drawing.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/15 19:05:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/16 09:36:02 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 	{
 		img_pix_put(&data->img, p1.x, p1.y, data->color);
 		if (p1.x == p2.x && p1.y == p2.y)	
+			break ;
+		if (p1.x >= WINDOW_WIDTH || p1.y >= WINDOW_HEIGHT)
 			break ;
 		data->bres.err2 = 2 * data->bres.err;
 		if (data->bres.err2 >= data->bres.dy)

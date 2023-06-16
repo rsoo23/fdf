@@ -68,14 +68,32 @@ void	init_data(t_data *data)
 
 int	render(t_data *data)
 {
-	render_background(&data->img, WHITE);
-	render_map(data);
+	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len, &data->img.endian);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	// render_background(&data->img, WHITE);
+	render_map(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
+	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
 	return (0);
 }
 
 // gcc srcs/main.c -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit && ./a.out 42.fdf
+
+void	init_fdf(char **av, t_data *data)
+{
+	data->mlx_ptr = mlx_init();
+	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
+	init_data(data);
+	parse_map(av, data);
+}
+
+void	fdf_hooks(t_data *data)
+{
+	mlx_loop_hook(data->mlx_ptr, render, data);
+	mlx_hook(data->win_ptr, 2, 1, handle_keypress, data);
+	mlx_loop(data->mlx_ptr);
+}
 
 int	main(int ac, char **av)
 {
@@ -83,20 +101,9 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		return (1);
-    data.mlx_ptr = mlx_init();
-	if (data.mlx_ptr == NULL)
-		return (1);
-	data.win_ptr = mlx_new_window(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
-	if (data.win_ptr == NULL)
-		return (1);
-	data.img.mlx_img = mlx_new_image(data.mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
-	data.img.addr = mlx_get_data_addr(data.img.mlx_img, &data.img.bpp, &data.img.line_len, &data.img.endian);
-	init_data(&data);
-	parse_map(av, &data);
-	mlx_loop_hook(data.mlx_ptr, render, &data);
-	mlx_hook(data.win_ptr, 2, 1, handle_keypress, &data);
-	mlx_loop(data.mlx_ptr);
-	mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
+	init_fdf(av, &data);
+	fdf_hooks(&data);
+	// mlx_destroy_image(data.mlx_ptr, data.img.mlx_img);
 	free(data.mlx_ptr);
 }
 

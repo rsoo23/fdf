@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   key_utils.c                                        :+:      :+:    :+:   */
+/*   hooks.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/13 08:41:07 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/15 21:47:31 by rsoo             ###   ########.fr       */
+/*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
+/*   Updated: 2023/06/16 09:55:25 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,8 @@ int	handle_keypress(int keysym, t_data *data)
 	else if (keysym == F_KEY)
 		data->angle -= 0.1;
 	printf("keypress: %d\n", keysym);
+	// mlx_clear_window(data->mlx_ptr, data->win_ptr);
+	// mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
 	return (0);
 }
 
