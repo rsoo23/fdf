@@ -96,7 +96,6 @@ void	fdf_hooks(t_data *data)
 {
 	mlx_loop_hook(data->mlx_ptr, render, data);
 	mlx_hook(data->win_ptr, 2, 1, handle_keypress, data);
-	// mlx_hook(data->win_ptr, 4, 0, handle_mouse, data);
 	mlx_loop(data->mlx_ptr);
 }
 
@@ -140,8 +139,7 @@ Task List:
 - [ ] extra projection
 - [x] fix the scaling
 - [ ] rotation
-- [ ] z_altitude scaling
+- [x] z_altitude scaling
 - [ ] correct freeing 
 - [ ] color gradient
-- [ ] menu
 */

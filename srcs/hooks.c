@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/16 17:09:10 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/16 21:05:01 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,6 @@ int	handle_keypress(int keysym, t_data *data)
 		data->rot_angle_z -= 0.05;
 	else if (keysym == R_KEY)
 		init_data(data);
-	// else if (keysym)
 	printf("keypress: %d\n", keysym);
 	return (0);
 }
-
-// int	handle_mouse(int keysym, t_data *data)
-// {
-// 	printf("mouse: %d\n", keysym);
-// 	if (keysym == LEFT_CLICK)
-// 		data->scale_factor += 1;
-// 	else if (keysym == RIGHT_CLICK && data->scale_factor > 0)
-// 		data->scale_factor -= 1;
-// 	else if (keysym == LEFT_CLICK)
-// 		return (0);
-// 	else if (keysym == RIGHT_CLICK)
-// 		return (0);
-// 	return (0);
-// }

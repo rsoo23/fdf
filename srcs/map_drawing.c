@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/16 16:56:14 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/16 20:55:31 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,12 +55,12 @@ static void	draw_line(t_data *data)
 {
 	z_scale(data);
 	scale_points(data);
-	if (data->proj == 'i')
-		iso_transform(data->p1, data->p2, data->angle);
-	if (data->proj == 'p')
-		perspec_transform(data->p1, data->p2, data->focal_len);
 	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
 		rotation(data);
+	if (data->proj == 'p')
+		perspec_transform(data->p1, data->p2, data->focal_len);
+	if (data->proj == 'i')
+		iso_transform(data->p1, data->p2, data->angle);
 	shift(data);
 	if (data->p1->z != 0 || data->p2->z != 0)
 		data->color = PURPLE;
