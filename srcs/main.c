@@ -58,8 +58,8 @@ void	init_points(t_data *data)
 void	init_data(t_data *data)
 {
 	init_points(data);
-	data->shift_x = MID_X - 200;
-	data->shift_y = 100;
+	data->shift_x = 0;
+	data->shift_y = 0;
 	data->scale_factor = 50;
 	data->color = WHITE;
 	data->angle = 1.0;
@@ -69,6 +69,8 @@ void	init_data(t_data *data)
 	data->rot_angle_y = 0;
 	data->rot_angle_z = 0;
 	data->focal_len = 20;
+	data->base_val = 0;
+	data->fov = M_PI / 2;
 }
 
 int	render(t_data *data)
@@ -77,12 +79,11 @@ int	render(t_data *data)
 	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len, &data->img.endian);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	render_map(data);
+	render_menu(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
 	return (0);
 }
-
-// gcc srcs/main.c -Lminilibx_macos -lmlx -framework OpenGL -framework AppKit && ./a.out 42.fdf
 
 void	init_fdf(char **av, t_data *data)
 {
@@ -138,8 +139,7 @@ Task List:
 - [x] use images
 - [ ] extra projection
 - [x] fix the scaling
-- [ ] rotation
+- [x] rotation
 - [x] z_altitude scaling
 - [ ] correct freeing 
-- [ ] color gradient
 */

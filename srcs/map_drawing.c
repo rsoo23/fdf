@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/16 20:55:31 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/17 16:10:54 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,16 @@ static void	draw_line(t_data *data)
 {
 	z_scale(data);
 	scale_points(data);
+	offset_axes(data);
 	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
 		rotation(data);
-	if (data->proj == 'p')
-		perspec_transform(data->p1, data->p2, data->focal_len);
 	if (data->proj == 'i')
 		iso_transform(data->p1, data->p2, data->angle);
+	// if (data->proj == 'p')
+	// 	perspec_transform(data->p1, data->p2, data);
+	offset_origin(data);
 	shift(data);
-	if (data->p1->z != 0 || data->p2->z != 0)
+	if (data->p1->z != data->base_val || data->p2->z != data->base_val)
 		data->color = PURPLE;
 	else
 		data->color = WHITE;
@@ -71,7 +73,7 @@ static void	draw_line(t_data *data)
 
 void	draw_horizontal(int i, int j, t_data *data)
 {
-	if (i < data->length)
+	if (i < data->width)
 	{
 		data->p1->x = i;
 		data->p1->y = j;
@@ -85,7 +87,7 @@ void	draw_horizontal(int i, int j, t_data *data)
 
 void	draw_vertical(int i, int j, t_data *data)
 {
-	if (j < data->width)
+	if (j < data->height)
 	{
 		data->p1->x = i;
 		data->p1->y = j;

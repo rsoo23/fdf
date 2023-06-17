@@ -27,34 +27,32 @@
 
 // keys
 # define ESC_KEY 53
+// shifting / translation
 # define LEFT_ARROW 123
 # define RIGHT_ARROW 124
 # define DOWN_ARROW 125
 # define UP_ARROW 126
+// scaling
 # define Z_KEY 6
 # define X_KEY 7
+// z scale
 # define G_KEY 5
 # define F_KEY 3
-# define R_KEY 15
-# define E_KEY 14
 
+# define C_KEY 8
+# define V_KEY 9
+// projections
+# define R_KEY 15
 # define P_KEY 35
 # define I_KEY 34
 # define T_KEY 17
-
+// rotations
 # define A_KEY 0
 # define S_KEY 1
 # define D_KEY 2
 # define Q_KEY 12
 # define W_KEY 13
 # define E_KEY 14
-
-// mouse
-# define SCROLL_UP 5
-# define SCROLL_DOWN 4
-# define LEFT_CLICK 1
-# define RIGHT_CLICK 2
-
 // colors
 # define WHITE 0xFFFFFF
 # define PURPLE 0xFF00FF
@@ -96,8 +94,8 @@ typedef struct	s_data
 	void			*win_ptr;
 	char			*infile;
 	int				fd;
-	int				length;
 	int				width;
+	int				height;
 	int				**alt_matrix;
 	int				scale_factor;
 	int				shift_x;
@@ -110,6 +108,8 @@ typedef struct	s_data
 	float			rot_angle_y;
 	float			rot_angle_z;
 	float			focal_len;
+	int				base_val;
+	float			fov;
 	t_point			*p1;
 	t_point			*p2;
 	t_bres			bres;
@@ -126,15 +126,19 @@ void	parse_map(char **av, t_data *data);
 
 // hooks.c
 int		handle_keypress(int keysym, t_data *data);
-// int		handle_mouse(int keysym, t_data *data);
 
 // map_drawing.c
 void	draw_horizontal(int i, int j, t_data *data);
 void	draw_vertical(int i, int j, t_data *data);
 
+// rendering.c
+void	img_pix_put(t_img *img, int x, int y, int color);
+void	render_map(t_data *data);
+void	render_menu(t_data *data);
+
 // transform_utils_1.c
 void	iso_transform(t_point *p1, t_point *p2, float angle);
-void	perspec_transform(t_point *p1, t_point *p2, float focal_len);
+void	perspec_transform(t_point *p1, t_point *p2, t_data *data);
 void	scale_points(t_data *data);
 void	z_scale(t_data *data);
 
@@ -142,8 +146,8 @@ void	z_scale(t_data *data);
 void	rotation(t_data *data);
 void	shift(t_data *data);
 
-// rendering.c
-void	img_pix_put(t_img *img, int x, int y, int color);
-void	render_map(t_data *data);
+// transform_utils_3.c
+void	offset_axes(t_data *data);
+void	offset_origin(t_data *data);
 
 #endif

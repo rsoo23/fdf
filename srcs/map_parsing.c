@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/16 18:30:54 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/17 12:57:10 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	assign_altitude_matrix(t_data *data)
 	int		j;
 
 	i = 0;
-	data->alt_matrix = malloc(sizeof(int *) * (data->width + 2));
+	data->alt_matrix = malloc(sizeof(int *) * (data->height + 2));
 	if (!(data->alt_matrix))
 		return ;
 	data->fd = open(data->infile, O_RDONLY);
@@ -32,7 +32,7 @@ static void	assign_altitude_matrix(t_data *data)
 	line = get_next_line(data->fd);
 	while (line)
 	{
-		data->alt_matrix[i] = malloc(sizeof(int) * (data->length + 1));
+		data->alt_matrix[i] = malloc(sizeof(int) * (data->width + 1));
 		num_arr = ft_split(line, ' ');
 		j = -1;
 		while (num_arr[++j])
@@ -65,9 +65,9 @@ static void	get_map_length(char *line, t_data *data)
 			i++;
 	}
 	free(line);
-	if (data->length == 0)
-		data->length = space_count;
-	else if (data->length != space_count)
+	if (data->width == 0)
+		data->width = space_count;
+	else if (data->width != space_count)
 	{
 		perror("Map Length Error");
 		exit(EXIT_FAILURE);
@@ -89,17 +89,17 @@ static void	get_map_dimensions(t_data *data)
 	{
 		get_map_length(line, data);
 		line = get_next_line(data->fd);
-		data->width++;
+		data->height++;
 	}
-	data->width--;
+	data->height--;
 	free(line);
 }
 
 void	parse_map(char **av, t_data *data)
 {
 	data->infile = ft_strdup(av[1]);
-	data->length = 0;
 	data->width = 0;
+	data->height = 0;
 	get_map_dimensions(data);
 	assign_altitude_matrix(data);
 	free(data->infile);

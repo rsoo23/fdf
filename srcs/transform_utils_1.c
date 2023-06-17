@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:04:36 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/16 18:39:22 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/17 16:08:09 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,20 @@ void	iso_transform(t_point *p1, t_point *p2, float angle)
 	p2->y = (p2->x + p2->y) * sin(angle) - p2->z;
 }
 
-void	perspec_transform(t_point *p1, t_point *p2, float focal_len)
+void	perspec_transform(t_point *p1, t_point *p2, t_data *data)
 {
-	p1->x = focal_len * (p1->x / p1->z);
-	p1->y = focal_len * (p1->y / p1->z);
-	p2->x = focal_len * (p2->x / p2->z);
-	p2->y = focal_len * (p2->y / p2->z);
+	float aspect_ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
+	float focal_len_scale_factor = 1 / tan(M_PI / 2 / 2);
+	int	z_far = 1920 + 500;
+	int z_near = 1920;
+	float lambda = z_far / (z_far - z_near);
+
+	data->proj = 'p';
+	p1->x = p1->x / aspect_ratio * focal_len_scale_factor;
+	p1->y = p1->y * focal_len_scale_factor;
+	p1->z = lambda * p1->z - lambda * z_near;
+	p2->x = p2->x / aspect_ratio * focal_len_scale_factor;
+	p2->y = p2->y * focal_len_scale_factor;
+	p2->z = lambda * p2->z - lambda * z_near; 
 }
+                                                                                                                                                                                                                                                                       
