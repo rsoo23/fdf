@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 08:56:06 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/17 12:42:44 by rsoo             ###   ########.fr        #
+#    Updated: 2023/06/19 16:33:52 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,9 @@ SRCS = main \
 		transform_utils_1 \
 		transform_utils_2 \
 		transform_utils_3 \
-		rendering
+		rendering \
+		freeing_utils \
+		color
 SRCS_CFILES = $(addprefix $(SRCS_DIR), $(addsuffix .c, $(SRCS)))
 OBJS = $(SRCS_CFILES:.c=.o)
 

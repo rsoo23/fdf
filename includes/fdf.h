@@ -38,7 +38,7 @@
 // z scale
 # define G_KEY 5
 # define F_KEY 3
-
+// base values
 # define C_KEY 8
 # define V_KEY 9
 // projections
@@ -102,13 +102,12 @@ typedef struct	s_data
 	int				shift_y;
 	int				z_scale;
 	unsigned int	color;
-	float			angle;
 	char			proj;
 	float			rot_angle_x;
 	float			rot_angle_y;
 	float			rot_angle_z;
+	// int				base_val;
 	float			focal_len;
-	int				base_val;
 	float			fov;
 	t_point			*p1;
 	t_point			*p2;
@@ -149,5 +148,10 @@ void	shift(t_data *data);
 // transform_utils_3.c
 void	offset_axes(t_data *data);
 void	offset_origin(t_data *data);
+
+// freeing_utils.c
+void	exit_fdf(t_data *data, char *str, int status);
+
+// color.c
 
 #endif

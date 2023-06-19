@@ -44,9 +44,11 @@ the graphics system. Together, they provide the means to display graphics
 void	init_points(t_data *data)
 {
 	data->p1 = malloc(sizeof(t_point));
+	if (!data->p1)
+		exit_fdf(data, "p1 malloc error", EXIT_FAILURE);
 	data->p2 = malloc(sizeof(t_point));
-	if (!(data->p1) || !(data->p2))
-		return ;
+	if (!data->p2)
+		exit_fdf(data, "p2 malloc error", EXIT_FAILURE);
 	data->p1->x = 0;
 	data->p1->y = 0;
 	data->p1->z = 0;
@@ -62,7 +64,6 @@ void	init_data(t_data *data)
 	data->shift_y = 0;
 	data->scale_factor = 50;
 	data->color = WHITE;
-	data->angle = 1.0;
 	data->z_scale = 1;
 	data->proj = 'i';
 	data->rot_angle_x = 0;
@@ -71,12 +72,18 @@ void	init_data(t_data *data)
 	data->focal_len = 20;
 	data->base_val = 0;
 	data->fov = M_PI / 2;
+	data->bres.sx = 1;
+	data->bres.sy = 1;
 }
 
 int	render(t_data *data)
 {
 	data->img.mlx_img = mlx_new_image(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT);
+	if (!data->img.mlx_img)
+		exit_fdf(data, "mlx_new_image error", EXIT_FAILURE);
 	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line_len, &data->img.endian);
+	if (!data->img.addr)
+		exit_fdf(data, "mlx_get_data_addr error", EXIT_FAILURE);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	render_map(data);
 	render_menu(data);
@@ -85,19 +92,16 @@ int	render(t_data *data)
 	return (0);
 }
 
-void	init_fdf(char **av, t_data *data)
+static void	init_fdf(t_data *data)
 {
 	data->mlx_ptr = mlx_init();
+	if (!data->mlx_ptr)
+		exit_fdf(data, "mlx_ptr error", EXIT_FAILURE);
 	data->win_ptr = mlx_new_window(data->mlx_ptr, WINDOW_WIDTH, WINDOW_HEIGHT, "FDF");
+	if (!data->win_ptr)
+		exit_fdf(data, "win_ptr error", EXIT_FAILURE);
 	init_data(data);
 	parse_map(av, data);
-}
-
-void	fdf_hooks(t_data *data)
-{
-	mlx_loop_hook(data->mlx_ptr, render, data);
-	mlx_hook(data->win_ptr, 2, 1, handle_keypress, data);
-	mlx_loop(data->mlx_ptr);
 }
 
 int	main(int ac, char **av)
@@ -105,10 +109,12 @@ int	main(int ac, char **av)
 	t_data	data;
 
 	if (ac != 2)
-		return (1);
-	init_fdf(av, &data);
-	fdf_hooks(&data);
-	free(data.mlx_ptr);
+		exit_fdf(&data, "argument count error", EXIT_FAILURE);
+	fdf_init(&data);
+	mlx_loop_hook(data->mlx_ptr, render, data);
+	mlx_hook(data->win_ptr, 2, 1, handle_keypress, data);
+	mlx_loop(data->mlx_ptr);
+	exit_fdf(&data, NULL, EXIT_SUCCESS)
 }
 
 /*
@@ -137,9 +143,14 @@ Translation / Shifting
 
 Task List:
 - [x] use images
-- [ ] extra projection
 - [x] fix the scaling
 - [x] rotation
 - [x] z_altitude scaling
-- [ ] correct freeing 
+- [x] correct freeing
+- [ ] scaling adjustment for z
+	- if scale_factor++  
+	- if scale_factor-- 
+- [ ] extra projection
+- [ ] get menu working
+- [ ] hue function
 */

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/17 16:10:54 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/19 16:33:37 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,9 @@ static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 	data->bres.dx = abs_val(p2.x - p1.x);
 	data->bres.dy = -abs_val(p2.y - p1.y);
 	data->bres.err = data->bres.dx + data->bres.dy;
-	if (p1.x < p2.x)
-		data->bres.sx = 1;
-	else
+	if (p1.x > p2.x)
 		data->bres.sx = -1;
 	if (p1.y < p2.y)
-		data->bres.sy = 1;
-	else
 		data->bres.sy = -1;
 	while (1)
 	{
@@ -59,15 +55,12 @@ static void	draw_line(t_data *data)
 	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
 		rotation(data);
 	if (data->proj == 'i')
-		iso_transform(data->p1, data->p2, data->angle);
-	// if (data->proj == 'p')
-	// 	perspec_transform(data->p1, data->p2, data);
+		iso_transform(data->p1, data->p2, 0.8);
+	if (data->proj == 'p')
+		perspec_transform(data->p1, data->p2, data);
 	offset_origin(data);
 	shift(data);
-	if (data->p1->z != data->base_val || data->p2->z != data->base_val)
-		data->color = PURPLE;
-	else
-		data->color = WHITE;
+	set_color(data);
 	bresenham_alg(*(data->p1), *(data->p2), data);
 }
 
