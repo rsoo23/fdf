@@ -53,10 +53,18 @@
 # define Q_KEY 12
 # define W_KEY 13
 # define E_KEY 14
+// hues
+# define H_KEY 
+# define J_KEY 
 // colors
 # define WHITE 0xFFFFFF
-# define PURPLE 0xFF00FF
-# define BLACK 0x000000
+# define BLUE 0x0000FF
+# define GREEN 0x00FF00
+# define YELLOW 0xFFFF00
+# define ORANGE 0xFF6900
+# define RED 0xFF0000
+# define PINK 0xFF00FF
+# define PURPLE 0x4100FF
 
 /*
 mlx_img: refers to the address mlx_new_image returns
@@ -88,6 +96,22 @@ typedef struct s_bres
 	int		sy;
 }	t_bres;
 
+typedef struct	s_hue
+{
+	unsigned char	r;
+	unsigned char	g;
+	unsigned char	b;
+}	t_hue;
+
+typedef struct	s_color
+{
+	unsigned int	base_hue_count;
+	unsigned int	base_height;
+	unsigned int	hue_index;
+	unsigned int	hue;
+	t_hue			hues[8];
+}	t_color;
+
 typedef struct	s_data
 {
 	void			*mlx_ptr;
@@ -101,18 +125,17 @@ typedef struct	s_data
 	int				shift_x;
 	int				shift_y;
 	int				z_scale;
-	unsigned int	color;
 	char			proj;
 	float			rot_angle_x;
-	float			rot_angle_y;
 	float			rot_angle_z;
-	// int				base_val;
+	float			rot_angle_y;
 	float			focal_len;
 	float			fov;
 	t_point			*p1;
 	t_point			*p2;
 	t_bres			bres;
 	t_img			img;
+	t_color			color;
 }	t_data;
 
 // main.c
@@ -153,5 +176,7 @@ void	offset_origin(t_data *data);
 void	exit_fdf(t_data *data, char *str, int status);
 
 // color.c
+void	set_color(t_data *data);
+void	init_hues(t_color *color);
 
 #endif

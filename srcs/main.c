@@ -60,20 +60,22 @@ void	init_points(t_data *data)
 void	init_data(t_data *data)
 {
 	init_points(data);
+	init_hues(data->color);
 	data->shift_x = 0;
 	data->shift_y = 0;
 	data->scale_factor = 50;
-	data->color = WHITE;
 	data->z_scale = 1;
 	data->proj = 'i';
 	data->rot_angle_x = 0;
 	data->rot_angle_y = 0;
 	data->rot_angle_z = 0;
 	data->focal_len = 20;
-	data->base_val = 0;
 	data->fov = M_PI / 2;
 	data->bres.sx = 1;
 	data->bres.sy = 1;
+	data->color->hue_num = 1;
+	data->color->base_hue_num = 1;
+	data->color->base_height = 0;
 }
 
 int	render(t_data *data)

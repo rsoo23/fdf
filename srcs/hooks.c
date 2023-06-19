@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/19 16:27:39 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/19 22:38:07 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,9 +59,13 @@ void	extra_features(int keysym, t_data *data)
 	else if (keysym == F_KEY)
 		data->z_scale -= 1;
 	else if (keysym == C_KEY)
-		data->base_val -= 1;
+		data->color->base_height -= 1;
 	else if (keysym == V_KEY)
-		data->base_val += 1;
+		data->color->base_height += 1;
+	else if (keysym == H_KEY)
+		data->color->base_hue_count -= 1;
+	else if (keysym == J_KEY)
+		data->color->base_hue_count += 1;
 }
 
 int	handle_keypress(int keysym, t_data *data)

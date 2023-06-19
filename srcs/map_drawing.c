@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/19 16:33:37 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/19 21:19:29 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 		data->bres.sy = -1;
 	while (1)
 	{
-		img_pix_put(&data->img, p1.x, p1.y, data->color);
+		img_pix_put(&data->img, p1.x, p1.y, data->color->hue);
 		if (p1.x == p2.x && p1.y == p2.y)	
 			break ;
 		data->bres.err2 = 2 * data->bres.err;
@@ -60,7 +60,7 @@ static void	draw_line(t_data *data)
 		perspec_transform(data->p1, data->p2, data);
 	offset_origin(data);
 	shift(data);
-	set_color(data);
+	set_color(&data->color, data);
 	bresenham_alg(*(data->p1), *(data->p2), data);
 }
 
