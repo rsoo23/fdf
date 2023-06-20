@@ -6,34 +6,19 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 18:03:37 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 21:03:38 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static int	abs_val(int i)
-{
-	if (i < 0)
-		return (-i);
-	return (i);
-}
-
 static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 {
-	data->bres.dx = abs_val(p2.x - p1.x);
-	data->bres.dy = -abs_val(p2.y - p1.y);
-	data->bres.err = data->bres.dx + data->bres.dy;
-	data->bres.sx = 1;
-	data->bres.sy = 1;
-	if (p1.x > p2.x)
-		data->bres.sx = -1;
-	if (p1.y > p2.y)
-		data->bres.sy = -1;
+	bresenham_get_values(p1, p2, data);
 	while (1)
 	{
 		img_pix_put(&data->img, p1.x, p1.y, data->color.hue);
-		if (p1.x == p2.x && p1.y == p2.y)	
+		if (p1.x == p2.x && p1.y == p2.y)
 			break ;
 		data->bres.err2 = 2 * data->bres.err;
 		if (data->bres.err2 >= data->bres.dy)
@@ -58,7 +43,8 @@ static void	draw_line(t_data *data)
 		oblique_transform(data->p1, data->p2, data->obl_angle);
 	if (data->proj == 'i')
 		iso_transform(data->p1, data->p2, 1.0);
-	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
+	if (data->rot_angle_x != 0 || \
+	data->rot_angle_y != 0 || data->rot_angle_z != 0)
 		rotation(data);
 	offset_origin(data);
 	shift(data);

@@ -44,9 +44,12 @@ void	get_hue(t_hue st_hue, t_hue end_hue, t_color *color)
 	}
 	else
 	{
-		r_new = (end_hue.r - st_hue.r) / 20 * (color->hue_index % 20) + st_hue.r;
-		g_new = (end_hue.g - st_hue.g) / 20 * (color->hue_index % 20) + st_hue.g;
-		b_new = (end_hue.b - st_hue.b) / 20 * (color->hue_index % 20) + st_hue.b;
+		r_new = (end_hue.r - st_hue.r) / 20 * \
+		(color->hue_index % 20) + st_hue.r;
+		g_new = (end_hue.g - st_hue.g) / 20 * \
+		(color->hue_index % 20) + st_hue.g;
+		b_new = (end_hue.b - st_hue.b) / 20 * \
+		(color->hue_index % 20) + st_hue.b;
 	}
 	color->hue = calc_rgb_uint(r_new, g_new, b_new);
 }

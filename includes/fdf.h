@@ -14,54 +14,16 @@
 # define FDF_H
 
 # include "../libft/libft.h"
+# include "macos_keys.h"
 # include <math.h>
 # include <mlx.h>
 
 // positions
 # define WINDOW_WIDTH 1920
 # define WINDOW_HEIGHT 1080
-# define MID_X WINDOW_WIDTH / 2
-# define MID_Y WINDOW_HEIGHT / 2
+# define MID_X 960
+# define MID_Y 540
 
-# define MLX_ERROR 1
-
-// keys
-# define ESC_KEY 53
-// shifting / translation
-# define LEFT_ARROW 123
-# define RIGHT_ARROW 124
-# define DOWN_ARROW 125
-# define UP_ARROW 126
-// scaling
-# define Z_KEY 6
-# define X_KEY 7
-// z scale
-# define G_KEY 5
-# define F_KEY 3
-// base values
-# define C_KEY 8
-# define V_KEY 9
-// projections
-# define R_KEY 15
-# define O_KEY 31
-# define I_KEY 34
-# define T_KEY 17
-# define Y_KEY 16
-# define U_KEY 32
-// rotations
-# define A_KEY 0
-# define S_KEY 1
-# define D_KEY 2
-# define Q_KEY 12
-# define W_KEY 13
-# define E_KEY 14
-// hues
-# define H_KEY 4
-# define J_KEY 38
-# define K_KEY 40
-# define L_KEY 37
-# define N_KEY 45
-# define M_KEY 46
 // colors
 # define WHITE 0xFFFFFF
 # define BLUE 0x0000FF
@@ -76,7 +38,7 @@
 mlx_img: refers to the address mlx_new_image returns
 bpps: bits per pixel
 */
-typedef struct	s_img
+typedef struct s_img
 {
 	void	*mlx_img;
 	char	*addr;
@@ -85,7 +47,7 @@ typedef struct	s_img
 	int		endian;
 }	t_img;
 
-typedef struct	s_point
+typedef struct s_point
 {
 	int	x;
 	int	y;
@@ -102,14 +64,14 @@ typedef struct s_bres
 	int		sy;
 }	t_bres;
 
-typedef struct	s_hue
+typedef struct s_hue
 {
 	unsigned char	r;
 	unsigned char	g;
 	unsigned char	b;
 }	t_hue;
 
-typedef struct	s_color
+typedef struct s_color
 {
 	unsigned int	base_hue_count;
 	unsigned int	hue_count;
@@ -120,7 +82,7 @@ typedef struct	s_color
 	t_hue			hues[8];
 }	t_color;
 
-typedef struct	s_data
+typedef struct s_data
 {
 	void			*mlx_ptr;
 	void			*win_ptr;
@@ -179,8 +141,9 @@ void	shift(t_data *data);
 void	offset_axes(t_data *data);
 void	offset_origin(t_data *data);
 
-// freeing_utils.c
+// utils.c
 void	exit_fdf(t_data *data, char *str, int status);
+void	bresenham_get_values(t_point p1, t_point p2, t_data *data);
 
 // color_1.c
 void	set_color(t_color *color, t_data *data);
