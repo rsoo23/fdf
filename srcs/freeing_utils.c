@@ -22,6 +22,9 @@ void	exit_fdf(t_data *data, char *str, int status)
         free(data->p1);
     if (data->p2)
         free(data->p2);
+	if (data->infile)
+		free(data->infile);
+	data->infile = NULL;
 	data->p1 = NULL;
 	data->p2 = NULL;
     data->mlx_ptr = NULL;

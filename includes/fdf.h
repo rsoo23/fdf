@@ -54,8 +54,8 @@
 # define W_KEY 13
 # define E_KEY 14
 // hues
-# define H_KEY 
-# define J_KEY 
+# define H_KEY 4
+# define J_KEY 38
 // colors
 # define WHITE 0xFFFFFF
 # define BLUE 0x0000FF
@@ -64,7 +64,7 @@
 # define ORANGE 0xFF6900
 # define RED 0xFF0000
 # define PINK 0xFF00FF
-# define PURPLE 0x4100FF
+# define PURPLE 0x7800FF
 
 /*
 mlx_img: refers to the address mlx_new_image returns
@@ -154,7 +154,7 @@ void	draw_horizontal(int i, int j, t_data *data);
 void	draw_vertical(int i, int j, t_data *data);
 
 // rendering.c
-void	img_pix_put(t_img *img, int x, int y, int color);
+void	img_pix_put(t_img *img, int x, int y, unsigned int color);
 void	render_map(t_data *data);
 void	render_menu(t_data *data);
 
@@ -176,7 +176,7 @@ void	offset_origin(t_data *data);
 void	exit_fdf(t_data *data, char *str, int status);
 
 // color.c
-void	set_color(t_data *data);
+void	set_color(t_color *color, t_data *data);
 void	init_hues(t_color *color);
 
 #endif

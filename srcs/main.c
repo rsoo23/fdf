@@ -60,7 +60,7 @@ void	init_points(t_data *data)
 void	init_data(t_data *data)
 {
 	init_points(data);
-	init_hues(data->color);
+	init_hues(&data->color);
 	data->shift_x = 0;
 	data->shift_y = 0;
 	data->scale_factor = 50;
@@ -71,11 +71,9 @@ void	init_data(t_data *data)
 	data->rot_angle_z = 0;
 	data->focal_len = 20;
 	data->fov = M_PI / 2;
-	data->bres.sx = 1;
-	data->bres.sy = 1;
-	data->color->hue_num = 1;
-	data->color->base_hue_num = 1;
-	data->color->base_height = 0;
+	data->color.base_hue_count = 1;
+	data->color.base_height = 0;
+	data->color.hue = WHITE;
 }
 
 int	render(t_data *data)
@@ -88,13 +86,13 @@ int	render(t_data *data)
 		exit_fdf(data, "mlx_get_data_addr error", EXIT_FAILURE);
 	mlx_clear_window(data->mlx_ptr, data->win_ptr);
 	render_map(data);
-	render_menu(data);
 	mlx_put_image_to_window(data->mlx_ptr, data->win_ptr, data->img.mlx_img, 0, 0);
 	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+	render_menu(data);
 	return (0);
 }
 
-static void	init_fdf(t_data *data)
+static void	init_fdf(char **av, t_data *data)
 {
 	data->mlx_ptr = mlx_init();
 	if (!data->mlx_ptr)
@@ -112,11 +110,11 @@ int	main(int ac, char **av)
 
 	if (ac != 2)
 		exit_fdf(&data, "argument count error", EXIT_FAILURE);
-	fdf_init(&data);
-	mlx_loop_hook(data->mlx_ptr, render, data);
-	mlx_hook(data->win_ptr, 2, 1, handle_keypress, data);
-	mlx_loop(data->mlx_ptr);
-	exit_fdf(&data, NULL, EXIT_SUCCESS)
+	init_fdf(av, &data);
+	mlx_loop_hook(data.mlx_ptr, render, &data);
+	mlx_hook(data.win_ptr, 2, 1, handle_keypress, &data);
+	mlx_loop(data.mlx_ptr);
+	exit_fdf(&data, NULL, EXIT_SUCCESS);
 }
 
 /*

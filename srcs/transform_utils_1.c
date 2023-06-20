@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:04:36 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/19 16:15:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 09:43:58 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,9 @@ void	perspec_transform(t_point *p1, t_point *p2, t_data *data)
 	float	lambda;
 
 	aspect_ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
-	focal_len_scale_factor = 1 / tan(M_PI / 2 / 2);
-	z_far = 1920 + 500;
-	z_near = 1920;
+	focal_len_scale_factor = 1 / tan(M_PI / 4 / 2);
+	z_far = 100;
+	z_near = 10;
 	lambda = z_far / (z_far - z_near);
 	data->proj = 'p';
 	p1->x = p1->x / aspect_ratio * focal_len_scale_factor;

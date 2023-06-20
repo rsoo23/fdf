@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/19 22:38:07 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 09:59:44 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,16 +36,16 @@ static void	translation_rotation(int keysym, t_data *data)
 		data->rot_angle_z -= 0.05;
 }
 
-static void	projections(int keysym, t_data *data)
+static void	projections_scaling(int keysym, t_data *data)
 {
 	if (keysym == T_KEY)
 		data->proj = 't';
 	else if (keysym == I_KEY)
 		data->proj = 'i';
 	else if (keysym == R_KEY)
+		init_data(data);
 	else if (keysym == P_KEY)
 		data->proj = 'p';
-		init_data(data);
 	else if (keysym == X_KEY)
 		data->scale_factor += 1;
 	else if (keysym == Z_KEY && data->scale_factor > 0)
@@ -59,13 +59,13 @@ void	extra_features(int keysym, t_data *data)
 	else if (keysym == F_KEY)
 		data->z_scale -= 1;
 	else if (keysym == C_KEY)
-		data->color->base_height -= 1;
+		data->color.base_height -= 1;
 	else if (keysym == V_KEY)
-		data->color->base_height += 1;
-	else if (keysym == H_KEY)
-		data->color->base_hue_count -= 1;
+		data->color.base_height += 1;
+	else if (keysym == H_KEY && data->color.base_hue_count > 0)
+		data->color.base_hue_count -= 1;
 	else if (keysym == J_KEY)
-		data->color->base_hue_count += 1;
+		data->color.base_hue_count += 1;
 }
 
 int	handle_keypress(int keysym, t_data *data)
@@ -78,7 +78,7 @@ int	handle_keypress(int keysym, t_data *data)
 	}
 	translation_rotation(keysym, data);
 	projections_scaling(keysym, data);
-	extras_features(keysym, data);
-	// printf("keypress: %d\n", keysym);
+	extra_features(keysym, data);
+	printf("keypress: %d\n", keysym);
 	return (0);
 }

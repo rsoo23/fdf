@@ -6,38 +6,46 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/19 15:24:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 09:45:42 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/fdf.h"
 
-static void	assign_altitude_matrix(t_data *data)
+static void	alt_matrix_gnl(t_data *data)
 {
 	char	*line;
 	char	**num_arr;
+	int		i;
+	int		j;
 
-	data->alt_matrix = malloc(sizeof(int *) * (data->height + 2));
-	if (!(data->alt_matrix))
-		return ;
-	data->fd = open(data->infile, O_RDONLY);
-	if (data->fd < 0)
-		exit_fdf(data, "Failed to open file", EXIT_FAILURE);
+	i = 0;
 	line = get_next_line(data->fd);
 	while (line)
 	{
-		*(data->alt_matrix) = malloc(sizeof(int) * (data->width + 1));
+		data->alt_matrix[i] = malloc(sizeof(int) * (data->width + 1));
 		num_arr = ft_split(line, ' ');
 		j = -1;
-		while ((*num_arr)++)
-			data->alt_matrix[i][j] = ft_atoi(*num_arr);
+		while (num_arr[++j])
+			data->alt_matrix[i][j] = ft_atoi(num_arr[j]);
 		free(num_arr);
 		free(line);
 		line = get_next_line(data->fd);
-		*(data->alt_matrix)++;
+		i++;
 	}
-	*(data->alt_matrix) = 0;
+	data->alt_matrix[i] = 0;
 	free(line);
+}
+
+static void	assign_altitude_matrix(t_data *data)
+{
+	data->alt_matrix = malloc(sizeof(int *) * (data->height + 2));
+	if (!(data->alt_matrix))
+		exit_fdf(data, "Altitude matrix error", EXIT_FAILURE);
+	data->fd = open(data->infile, O_RDONLY);
+	if (data->fd < 0)
+		exit_fdf(data, "Failed to open file", EXIT_FAILURE);
+	alt_matrix_gnl(data);
 	close(data->fd);
 }
 
@@ -90,5 +98,4 @@ void	parse_map(char **av, t_data *data)
 	data->height = 0;
 	get_map_dimensions(data);
 	assign_altitude_matrix(data);
-	free(data->infile);
 }
