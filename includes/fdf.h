@@ -43,9 +43,11 @@
 # define V_KEY 9
 // projections
 # define R_KEY 15
-# define P_KEY 35
+# define O_KEY 31
 # define I_KEY 34
 # define T_KEY 17
+# define Y_KEY 16
+# define U_KEY 32
 // rotations
 # define A_KEY 0
 # define S_KEY 1
@@ -56,6 +58,10 @@
 // hues
 # define H_KEY 4
 # define J_KEY 38
+# define K_KEY 40
+# define L_KEY 37
+# define N_KEY 45
+# define M_KEY 46
 // colors
 # define WHITE 0xFFFFFF
 # define BLUE 0x0000FF
@@ -106,9 +112,11 @@ typedef struct	s_hue
 typedef struct	s_color
 {
 	unsigned int	base_hue_count;
+	unsigned int	hue_count;
 	unsigned int	base_height;
 	unsigned int	hue_index;
 	unsigned int	hue;
+	int				max_z;
 	t_hue			hues[8];
 }	t_color;
 
@@ -126,11 +134,10 @@ typedef struct	s_data
 	int				shift_y;
 	int				z_scale;
 	char			proj;
+	float			obl_angle;
 	float			rot_angle_x;
 	float			rot_angle_z;
 	float			rot_angle_y;
-	float			focal_len;
-	float			fov;
 	t_point			*p1;
 	t_point			*p2;
 	t_bres			bres;
@@ -160,7 +167,7 @@ void	render_menu(t_data *data);
 
 // transform_utils_1.c
 void	iso_transform(t_point *p1, t_point *p2, float angle);
-void	perspec_transform(t_point *p1, t_point *p2, t_data *data);
+void	oblique_transform(t_point *p1, t_point *p2, float angle);
 void	scale_points(t_data *data);
 void	z_scale(t_data *data);
 
@@ -175,8 +182,11 @@ void	offset_origin(t_data *data);
 // freeing_utils.c
 void	exit_fdf(t_data *data, char *str, int status);
 
-// color.c
+// color_1.c
 void	set_color(t_color *color, t_data *data);
+
+// color_2.c
+void	get_highest_alt(int **alt_mat, t_data *data);
 void	init_hues(t_color *color);
 
 #endif

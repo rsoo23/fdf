@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:16:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 10:00:18 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 18:17:28 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	render_menu(t_data *data)
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 200, WHITE, str);
 	free(str);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 230, WHITE, "Isometric: i");
-	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 250, WHITE, "Perspective: p");
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 250, WHITE, "Oblique: o");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 270, WHITE, "Top: t");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 290, WHITE, "Reset: r");
-	str = ft_strjoin("Scale (z/x): ", ft_itoa(data->scale_factor));
+	str = ft_strjoin("Scale (z/x): ", ft_itoa((int)data->scale_factor));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 320, WHITE, str);
 	free(str);
 	str = ft_strjoin("Z Scale (f/g): ", ft_itoa(data->z_scale));
@@ -71,5 +71,11 @@ void	render_menu(t_data *data)
 	free(str);
 	str = ft_strjoin("Base Hue Count (h/j): ", ft_itoa(data->color.base_hue_count));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 470, WHITE, str);
+	free(str);
+	str = ft_strjoin("Hue Count (k/l): ", ft_itoa(data->color.hue_count));
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 490, WHITE, str);
+	free(str);
+	str = ft_strjoin("Oblique Angle (Deg) (i): ", ft_itoa(data->obl_angle * 180 / M_PI));
+	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 520, WHITE, str);
 	free(str);
 }

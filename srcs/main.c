@@ -69,11 +69,11 @@ void	init_data(t_data *data)
 	data->rot_angle_x = 0;
 	data->rot_angle_y = 0;
 	data->rot_angle_z = 0;
-	data->focal_len = 20;
-	data->fov = M_PI / 2;
 	data->color.base_hue_count = 1;
+	data->color.hue_count = 1;
 	data->color.base_height = 0;
 	data->color.hue = WHITE;
+	data->obl_angle = 0.0;
 }
 
 int	render(t_data *data)
@@ -147,10 +147,8 @@ Task List:
 - [x] rotation
 - [x] z_altitude scaling
 - [x] correct freeing
-- [ ] scaling adjustment for z
-	- if scale_factor++  
-	- if scale_factor-- 
 - [ ] extra projection
-- [ ] get menu working
-- [ ] hue function
+- [x] get menu working
+- [x] hue function for base
+- [ ] hue function for non - base
 */

@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 09:59:44 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 18:18:29 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,17 +23,17 @@ static void	translation_rotation(int keysym, t_data *data)
 	else if (keysym == UP_ARROW)
 		data->shift_y -= 10;
 	else if (keysym == A_KEY)
-		data->rot_angle_x += 0.05;
+		data->rot_angle_x += M_PI / 60;
 	else if (keysym == S_KEY)
-		data->rot_angle_y += 0.05;
+		data->rot_angle_y += M_PI / 60;
 	else if (keysym == D_KEY)
-		data->rot_angle_z += 0.05;
+		data->rot_angle_z += M_PI / 60;
 	else if (keysym == Q_KEY)
-		data->rot_angle_x -= 0.05;
+		data->rot_angle_x -= M_PI / 60;
 	else if (keysym == W_KEY)
-		data->rot_angle_y -= 0.05;
+		data->rot_angle_y -= M_PI / 60;
 	else if (keysym == E_KEY)
-		data->rot_angle_z -= 0.05;
+		data->rot_angle_z -= M_PI / 60;
 }
 
 static void	projections_scaling(int keysym, t_data *data)
@@ -44,8 +44,8 @@ static void	projections_scaling(int keysym, t_data *data)
 		data->proj = 'i';
 	else if (keysym == R_KEY)
 		init_data(data);
-	else if (keysym == P_KEY)
-		data->proj = 'p';
+	else if (keysym == O_KEY)
+		data->proj = 'o';
 	else if (keysym == X_KEY)
 		data->scale_factor += 1;
 	else if (keysym == Z_KEY && data->scale_factor > 0)
@@ -58,7 +58,7 @@ void	extra_features(int keysym, t_data *data)
 		data->z_scale += 1;
 	else if (keysym == F_KEY)
 		data->z_scale -= 1;
-	else if (keysym == C_KEY)
+	else if (keysym == C_KEY && data->color.base_height > 0)
 		data->color.base_height -= 1;
 	else if (keysym == V_KEY)
 		data->color.base_height += 1;
@@ -66,6 +66,12 @@ void	extra_features(int keysym, t_data *data)
 		data->color.base_hue_count -= 1;
 	else if (keysym == J_KEY)
 		data->color.base_hue_count += 1;
+	else if (keysym == K_KEY && data->color.hue_count > 0)
+		data->color.hue_count -= 1;
+	else if (keysym == L_KEY)
+		data->color.hue_count += 1;
+	else if (keysym == U_KEY)
+		data->obl_angle += M_PI / 60;
 }
 
 int	handle_keypress(int keysym, t_data *data)

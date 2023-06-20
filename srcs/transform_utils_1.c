@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:04:36 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 09:43:58 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 17:42:03 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void	scale_points(t_data *data)
 {
 	data->p1->x *= data->scale_factor;
 	data->p1->y *= data->scale_factor;
+	// data->p1->z *= data->scale_factor / 10.0;
 	data->p2->x *= data->scale_factor;
 	data->p2->y *= data->scale_factor;
+	// data->p2->z *= data->scale_factor / 10.0;
 }
 
 void	iso_transform(t_point *p1, t_point *p2, float angle)
@@ -34,25 +36,11 @@ void	iso_transform(t_point *p1, t_point *p2, float angle)
 	p2->y = (p2->x + p2->y) * sin(angle) - p2->z;
 }
 
-void	perspec_transform(t_point *p1, t_point *p2, t_data *data)
+void	oblique_transform(t_point *p1, t_point *p2, float angle)
 {
-	float	aspect_ratio;
-	float	focal_len_scale_factor;
-	int		z_far;
-	int		z_near;
-	float	lambda;
-
-	aspect_ratio = WINDOW_WIDTH / WINDOW_HEIGHT;
-	focal_len_scale_factor = 1 / tan(M_PI / 4 / 2);
-	z_far = 100;
-	z_near = 10;
-	lambda = z_far / (z_far - z_near);
-	data->proj = 'p';
-	p1->x = p1->x / aspect_ratio * focal_len_scale_factor;
-	p1->y = p1->y * focal_len_scale_factor;
-	p1->z = lambda * p1->z - lambda * z_near;
-	p2->x = p2->x / aspect_ratio * focal_len_scale_factor;
-	p2->y = p2->y * focal_len_scale_factor;
-	p2->z = lambda * p2->z - lambda * z_near; 
+	p1->x += 0.5 * p1->z * cos(angle);
+	p1->y += 0.5 * p1->z * cos(angle);
+	p2->x += 0.5 * p2->z * cos(angle);
+	p2->y += 0.5 * p2->z * cos(angle);
 }
                                                                                                                                                                                                                                                                        

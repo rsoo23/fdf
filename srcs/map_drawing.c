@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 09:50:31 by rsoo             ###   ########.fr       */
+/*   Updated: 2023/06/20 18:03:37 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,19 +54,15 @@ static void	draw_line(t_data *data)
 	z_scale(data);
 	scale_points(data);
 	offset_axes(data);
-	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
-		rotation(data);
+	if (data->proj == 'o')
+		oblique_transform(data->p1, data->p2, data->obl_angle);
 	if (data->proj == 'i')
 		iso_transform(data->p1, data->p2, 1.0);
-	if (data->proj == 'p')
-		perspec_transform(data->p1, data->p2, data);
+	if (data->rot_angle_x != 0 || data->rot_angle_y != 0 || data->rot_angle_z != 0)
+		rotation(data);
 	offset_origin(data);
 	shift(data);
 	set_color(&data->color, data);
-	// if (data->p1->z != 0 || data->p2->z != 0)
-	// 	data->color.hue = PURPLE;
-	// else
-	// 	data->color.hue = WHITE;
 	bresenham_alg(*(data->p1), *(data->p2), data);
 }
 
