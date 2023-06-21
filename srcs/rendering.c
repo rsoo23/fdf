@@ -60,7 +60,7 @@ static void	render_menu_2(char *str, t_data *data)
 	str = ft_strjoin("Hue Count (k/l): ", ft_itoa(data->color.hue_count));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 490, WHITE, str);
 	free(str);
-	str = ft_strjoin("Oblique Angle (Deg) (y): ", \
+	str = ft_strjoin("Oblique Angle (Deg) (u): ", \
 	ft_itoa(data->obl_angle * 180 / M_PI));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 520, WHITE, str);
 	free(str);
