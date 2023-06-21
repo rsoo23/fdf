@@ -20,5 +20,33 @@ Perspective Projection: https://www.youtube.com/watch?v=U0_ONQQ5ZNM <br>
 ![image](https://github.com/rsoo23/fdf/assets/81731553/45186a50-47b0-4bef-aedc-2756bd9eb925)
 ![image](https://github.com/rsoo23/fdf/assets/81731553/8f8d0794-5ccf-49fc-b977-7e1d717c6c9a)
 
+## How to use (Only compatible with 42 Macs / if you have any minilibx library)
+1. clone the repository
+```bash
+git clone https://github.com/rsoo23/fdf.git fdf
+```
+2. make the executable
+```bash
+make
+```
+3. run the executable with the file you want
+```bash
+./fdf maps/filename.fdf
+```
 
-
+## Controls (MacOS Keys)
+| Key Press | Function |
+|-----------|----------|
+| I         | isometric projection |
+| O         | oblique projection |
+| T         | top view |
+| R         | reset |
+| q/a       | rotate about x-axis |
+| w/s       | rotate about y-axis |
+| e/d       | rotate about z-axis |
+| z/x       | dec. / inc. scale |
+| f/g       | dec. / inc. z scale |
+| c/v       | dec. / inc. base hue height |
+| h/j       | cycle through base hues |
+| k/l       | cycle through non-base hues |
+| u         | increase oblique angle |
