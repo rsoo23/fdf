@@ -36,6 +36,7 @@ int	ft_printf(const char *s, ...)
 int	ft_parse(va_list ap, const char **s)
 {
 	t_form	*form;
+	int		len;
 
 	form = malloc(sizeof(t_form));
 	ft_init_form(form);
@@ -56,8 +57,9 @@ int	ft_parse(va_list ap, const char **s)
 		else if (form->spec == 's')
 			ft_putstr_b(va_arg(ap, char *), form);
 	}
+	len = form->form_len;
 	free(form);
-	return (form->form_len);
+	return (len);
 }
 
 // int main(void)
