@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:16:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 20:58:30 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/07 22:23:11 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ void	render_map(t_data *data)
 	}
 }
 
-static void	render_menu_2(char *str, t_data *data)
+static void	render_menu_2(t_data *data)
 {
+	char	*str;
+
 	str = ft_strjoin("Y-axis Rotation (Deg) (w/s): ", \
 	ft_itoa(data->rot_angle_y * 180 / M_PI));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 400, WHITE, str);
@@ -88,5 +90,5 @@ void	render_menu(t_data *data)
 	ft_itoa(data->rot_angle_x * 180 / M_PI));
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 380, WHITE, str);
 	free(str);
-	render_menu_2(str, data);
+	render_menu_2(data);
 }
