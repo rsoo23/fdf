@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 18:18:29 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/07 22:49:34 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	extra_features(int keysym, t_data *data)
 
 int	handle_keypress(int keysym, t_data *data)
 {
+	data->should_render = 1;
 	if (keysym == ESC_KEY)
 	{
 		mlx_destroy_window(data->mlx_ptr, data->win_ptr);

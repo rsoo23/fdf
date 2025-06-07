@@ -74,24 +74,30 @@ void	init_data(t_data *data)
 	data->color.base_height = 0;
 	data->color.hue = 0xFFFFFF;
 	data->obl_angle = 0.0;
+	data->should_render = 1;
 }
 
 int	render(t_data *data)
 {
-	data->img.mlx_img = mlx_new_image(data->mlx_ptr, \
-	WINDOW_WIDTH, WINDOW_HEIGHT);
-	if (!data->img.mlx_img)
-		exit_fdf(data, "mlx_new_image error", EXIT_FAILURE);
-	data->img.addr = mlx_get_data_addr(data->img.mlx_img, \
-	&data->img.bpp, &data->img.line_len, &data->img.endian);
-	if (!data->img.addr)
-		exit_fdf(data, "mlx_get_data_addr error", EXIT_FAILURE);
-	mlx_clear_window(data->mlx_ptr, data->win_ptr);
-	render_map(data);
-	mlx_put_image_to_window(data->mlx_ptr, \
-	data->win_ptr, data->img.mlx_img, 0, 0);
-	mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
-	render_menu(data);
+	if (data->should_render)
+	{
+		data->img.mlx_img = mlx_new_image(data->mlx_ptr, \
+		WINDOW_WIDTH, WINDOW_HEIGHT);
+		if (!data->img.mlx_img)
+			exit_fdf(data, "mlx_new_image error", EXIT_FAILURE);
+		data->img.addr = mlx_get_data_addr(data->img.mlx_img, \
+		&data->img.bpp, &data->img.line_len, &data->img.endian);
+		if (!data->img.addr)
+			exit_fdf(data, "mlx_get_data_addr error", EXIT_FAILURE);
+		mlx_clear_window(data->mlx_ptr, data->win_ptr);
+		render_map(data);
+		mlx_put_image_to_window(data->mlx_ptr, \
+		data->win_ptr, data->img.mlx_img, 0, 0);
+		mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
+		render_menu(data);
+		ft_printf("sdf\n");
+		data->should_render = 0;
+	}
 	return (0);
 }
 
