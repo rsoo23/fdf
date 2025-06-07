@@ -6,13 +6,14 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 08:56:06 by rsoo              #+#    #+#              #
-#    Updated: 2023/06/20 20:57:11 by rsoo             ###   ########.fr        #
+#    Updated: 2025/06/07 21:58:33 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = fdf
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror -fsanitize=address -fdiagnostics-color=always -g3
+CFLAGS = -Wall -Wextra -Werror -g3 -I/usr/include -Imlx_linux -O3
+FSAN = -fsanitize=address -fdiagnostics-color=always 
 RM = rm -rf
 
 SRCS_DIR = srcs/
@@ -30,7 +31,7 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	make bonus -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) $(OBJS) -lmlx -framework OpenGL -framework AppKit -o $(NAME) $(LIBFT_DIR)/$(LIBFT)
+	$(CC) $(FSAN) $(OBJS) -Lmlx_linux -lmlx_linux -L/usr/lib -Imlx_linux -lXext -lX11 -lm -lz -o $(NAME) $(LIBFT_DIR)/$(LIBFT)
 
 clean:
 	make clean -C $(LIBFT_DIR)
