@@ -96,7 +96,6 @@ int	render(t_data *data)
 		data->win_ptr, data->img.mlx_img, 0, 0);
 		mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
 		render_menu(data);
-		ft_printf("sdf\n");
 		data->frames++;
 		if (data->frames == 2)
 		{
