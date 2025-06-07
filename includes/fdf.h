@@ -14,9 +14,19 @@
 # define FDF_H
 
 # include "../libft/libft.h"
-# include "macos_keys.h"
 # include <math.h>
 # include <mlx.h>
+
+# if defined(__APPLE__)
+#  include "macos_keys.h"
+# elif defined(_WIN32) || defined(_WIN64)
+#  include "windows_keys.h"
+# elif defined(__linux__)
+#  include "linux_keys.h"
+# else
+#  warning "Unknown platform - trying default Unix keys"
+#  include "linux_keys.h"
+# endif
 
 // positions
 # define WINDOW_WIDTH 1920
