@@ -154,6 +154,7 @@ void	offset_axes(t_data *data);
 void	offset_origin(t_data *data);
 
 // utils.c
+void	free_2d_arr(void **arr);
 void	exit_fdf(t_data *data, char *str, int status);
 void	bresenham_get_values(t_point p1, t_point p2, t_data *data);
 

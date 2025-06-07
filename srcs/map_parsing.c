@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/08 14:07:20 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 09:45:42 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/07 23:39:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	alt_matrix_gnl(t_data *data)
 		j = -1;
 		while (num_arr[++j])
 			data->alt_matrix[i][j] = ft_atoi(num_arr[j]);
-		free(num_arr);
+		free_2d_arr((void **)num_arr);
 		free(line);
 		line = get_next_line(data->fd);
 		i++;

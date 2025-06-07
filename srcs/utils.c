@@ -12,6 +12,17 @@
 
 #include "../includes/fdf.h"
 
+void	free_2d_arr(void **arr) {
+	int i;
+
+	i = 0;
+	if (!arr)
+		return;
+	while (arr[i])
+		free(arr[i++]);
+	free(arr);
+}
+
 void	exit_fdf(t_data *data, char *str, int status)
 {
 	if (status != 0)
@@ -24,6 +35,8 @@ void	exit_fdf(t_data *data, char *str, int status)
 		free(data->p2);
 	if (data->infile)
 		free(data->infile);
+	if (data->alt_matrix)
+		free_2d_arr((void **)(data->alt_matrix));
 	data->infile = NULL;
 	data->p1 = NULL;
 	data->p2 = NULL;

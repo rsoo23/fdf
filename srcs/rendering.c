@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:16:12 by rsoo              #+#    #+#             */
-/*   Updated: 2025/06/07 22:23:11 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/07 23:50:27 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,52 +43,77 @@ void	render_map(t_data *data)
 static void	render_menu_2(t_data *data)
 {
 	char	*str;
+	char	*str2;
 
-	str = ft_strjoin("Y-axis Rotation (Deg) (w/s): ", \
-	ft_itoa(data->rot_angle_y * 180 / M_PI));
+	str2 = ft_itoa(data->rot_angle_y * 180 / M_PI);
+	str = ft_strjoin("Y-axis Rotation (Deg) (w/s): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 400, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("Z-axis Rotation (Deg) (e/d): ", \
-	ft_itoa(data->rot_angle_z * 180 / M_PI));
+
+	str2 = 	ft_itoa(data->rot_angle_z * 180 / M_PI);
+	str = ft_strjoin("Z-axis Rotation (Deg) (e/d): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 420, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("Base Height (c/v): ", ft_itoa(data->color.base_height));
+
+	str2 = ft_itoa(data->color.base_height);
+	str = ft_strjoin("Base Height (c/v): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 450, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("Base Hue Count (h/j): ", \
-	ft_itoa(data->color.base_hue_count));
+
+	str2 = ft_itoa(data->color.base_hue_count);
+	str = ft_strjoin("Base Hue Count (h/j): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 470, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("Hue Count (k/l): ", ft_itoa(data->color.hue_count));
+
+	str2 = ft_itoa(data->color.hue_count);
+	str = ft_strjoin("Hue Count (k/l): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 490, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("Oblique Angle (Deg) (u): ", \
-	ft_itoa(data->obl_angle * 180 / M_PI));
+
+	str2 = ft_itoa(data->obl_angle * 180 / M_PI);
+	str = ft_strjoin("Oblique Angle (Deg) (u): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 520, WHITE, str);
+	free(str2);
 	free(str);
 }
 
 void	render_menu(t_data *data)
 {
 	char	*str;
+	char	*str2;
 
 	str = ft_strjoin("FDF: ", data->infile);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 200, WHITE, str);
 	free(str);
+
 	mlx_string_put(data->mlx_ptr, \
 	data->win_ptr, 100, 230, WHITE, "Isometric: i");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 250, WHITE, "Oblique: o");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 270, WHITE, "Top: t");
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 290, WHITE, "Reset: r");
-	str = ft_strjoin("Scale (z/x): ", ft_itoa((int)data->scale_factor));
+
+	str2 = ft_itoa((int)data->scale_factor);
+	str = ft_strjoin("Scale (z/x): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 320, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("Z Scale (f/g): ", ft_itoa(data->z_scale));
+
+	str2 = ft_itoa(data->z_scale);
+	str = ft_strjoin("Z Scale (f/g): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 350, WHITE, str);
+	free(str2);
 	free(str);
-	str = ft_strjoin("X-axis Rotation (Deg) (q/a): ", \
-	ft_itoa(data->rot_angle_x * 180 / M_PI));
+
+	str2 = ft_itoa(data->rot_angle_x * 180 / M_PI);
+	str = ft_strjoin("X-axis Rotation (Deg) (q/a): ", str2);
 	mlx_string_put(data->mlx_ptr, data->win_ptr, 100, 380, WHITE, str);
+	free(str2);
 	free(str);
+
 	render_menu_2(data);
 }
