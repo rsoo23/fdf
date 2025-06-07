@@ -111,6 +111,7 @@ typedef struct s_data
 	float			rot_angle_z;
 	float			rot_angle_y;
 	int				should_render;
+	int				frames;
 	t_point			*p1;
 	t_point			*p2;
 	t_bres			bres;

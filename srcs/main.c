@@ -75,6 +75,7 @@ void	init_data(t_data *data)
 	data->color.hue = 0xFFFFFF;
 	data->obl_angle = 0.0;
 	data->should_render = 1;
+	data->frames = 0;
 }
 
 int	render(t_data *data)
@@ -96,7 +97,12 @@ int	render(t_data *data)
 		mlx_destroy_image(data->mlx_ptr, data->img.mlx_img);
 		render_menu(data);
 		ft_printf("sdf\n");
-		data->should_render = 0;
+		data->frames++;
+		if (data->frames == 2)
+		{
+			data->should_render = 0;
+			data->frames = 0;
+		}
 	}
 	return (0);
 }
