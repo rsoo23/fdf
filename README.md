@@ -20,19 +20,26 @@ Perspective Projection: https://www.youtube.com/watch?v=U0_ONQQ5ZNM <br>
 ![image](https://github.com/rsoo23/fdf/assets/81731553/45186a50-47b0-4bef-aedc-2756bd9eb925)
 ![image](https://github.com/rsoo23/fdf/assets/81731553/8f8d0794-5ccf-49fc-b977-7e1d717c6c9a)
 
-## How to use (Only compatible with 42 Macs / if you have any minilibx library)
-1. clone the repository
+## Setup (Linux)
+1. Install the dependencies for minilibx
+```bash
+sudo apt-get update && sudo apt-get install xorg libxext-dev zlib1g-dev libbsd-dev
+```
+2. clone the repository
 ```bash
 git clone https://github.com/rsoo23/fdf.git fdf
 ```
-2. make the executable
+3. make the executable
 ```bash
 make
 ```
-3. run the executable with the file you want
+4. run the executable with the file you want
 ```bash
 ./fdf maps/filename.fdf
 ```
+
+To be able to run the program on other OSes, you can refer to this guide:
+[minilibx guide](https://harm-smits.github.io/41docs/libs/minilibx/getting_started.html)
 
 ## Controls (MacOS Keys)
 | Key Press | Function |
