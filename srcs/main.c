@@ -49,12 +49,12 @@ void	init_points(t_data *data)
 	data->p2 = malloc(sizeof(t_point));
 	if (!data->p2)
 		exit_fdf(data, "p2 malloc error", EXIT_FAILURE);
-	data->p1->x = 0;
-	data->p1->y = 0;
-	data->p1->z = 0;
-	data->p2->x = 0;
-	data->p2->y = 0;
-	data->p2->z = 0;
+	data->p1->x = 0.0f;
+	data->p1->y = 0.0f;
+	data->p1->z = 0.0f;
+	data->p2->x = 0.0f;
+	data->p2->y = 0.0f;
+	data->p2->z = 0.0f;
 }
 
 void	init_data(t_data *data)
@@ -64,7 +64,7 @@ void	init_data(t_data *data)
 	data->shift_x = 0;
 	data->shift_y = 0;
 	data->scale_factor = 50;
-	data->z_scale = 1;
+	data->z_scale = 0.1f;
 	data->proj = 'i';
 	data->rot_angle_x = 0;
 	data->rot_angle_y = 0;

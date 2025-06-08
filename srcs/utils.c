@@ -45,7 +45,7 @@ void	exit_fdf(t_data *data, char *str, int status)
 	exit(status);
 }
 
-static int	abs_val(int i)
+float	abs_val(float i)
 {
 	if (i < 0)
 		return (-i);

@@ -16,6 +16,7 @@
 # include "../libft/libft.h"
 # include <math.h>
 # include <mlx.h>
+# include <stdio.h>
 
 # if defined(__APPLE__)
 #  include "macos_keys.h"
@@ -44,6 +45,8 @@
 # define PINK 0xFF00FF
 # define PURPLE 0x7800FF
 
+# define EPSILON 1
+
 /*
 mlx_img: refers to the address mlx_new_image returns
 bpps: bits per pixel
@@ -59,19 +62,19 @@ typedef struct s_img
 
 typedef struct s_point
 {
-	int	x;
-	int	y;
-	int	z;
+	float	x;
+	float	y;
+	float	z;
 }	t_point;
 
 typedef struct s_bres
 {
-	int		dx;
-	int		dy;
-	int		err;
-	int		err2;
-	int		sx;
-	int		sy;
+	float	dx;
+	float	dy;
+	float	err;
+	float	err2;
+	float	sx;
+	float	sy;
 }	t_bres;
 
 typedef struct s_hue
@@ -104,7 +107,7 @@ typedef struct s_data
 	int				scale_factor;
 	int				shift_x;
 	int				shift_y;
-	int				z_scale;
+	float			z_scale;
 	char			proj;
 	float			obl_angle;
 	float			rot_angle_x;
@@ -154,6 +157,7 @@ void	offset_axes(t_data *data);
 void	offset_origin(t_data *data);
 
 // utils.c
+float	abs_val(float i);
 void	free_2d_arr(void **arr);
 void	exit_fdf(t_data *data, char *str, int status);
 void	bresenham_get_values(t_point p1, t_point p2, t_data *data);

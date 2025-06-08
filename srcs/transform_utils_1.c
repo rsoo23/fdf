@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 11:04:36 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 20:58:48 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/08 13:36:57 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@ void	scale_points(t_data *data)
 {
 	data->p1->x *= data->scale_factor;
 	data->p1->y *= data->scale_factor;
+	data->p1->z *= data->scale_factor;
 	data->p2->x *= data->scale_factor;
 	data->p2->y *= data->scale_factor;
+	data->p2->z *= data->scale_factor;
 }
 
 void	iso_transform(t_point *p1, t_point *p2, float angle)

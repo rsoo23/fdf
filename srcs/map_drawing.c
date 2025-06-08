@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 18:47:12 by rsoo              #+#    #+#             */
-/*   Updated: 2023/06/20 21:03:38 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/08 13:45:21 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ static void	bresenham_alg(t_point p1, t_point p2, t_data *data)
 	bresenham_get_values(p1, p2, data);
 	while (1)
 	{
-		img_pix_put(&data->img, p1.x, p1.y, data->color.hue);
-		if (p1.x == p2.x && p1.y == p2.y)
+		img_pix_put(&data->img, (int)roundf(p1.x), (int)roundf(p1.y), data->color.hue);
+		if (abs_val(p1.x - p2.x) < EPSILON && abs_val(p1.y - p2.y) < EPSILON)
 			break ;
 		data->bres.err2 = 2 * data->bres.err;
 		if (data->bres.err2 >= data->bres.dy)
@@ -52,16 +52,19 @@ static void	draw_line(t_data *data)
 	bresenham_alg(*(data->p1), *(data->p2), data);
 }
 
+static void set_point(t_point *point, float x, float y, float z)
+{
+	point->x = x;
+	point->y = y;
+	point->z = z;
+}
+
 void	draw_horizontal(int i, int j, t_data *data)
 {
 	if (i < data->width)
 	{
-		data->p1->x = i;
-		data->p1->y = j;
-		data->p1->z = data->alt_matrix[j][i];
-		data->p2->x = i + 1;
-		data->p2->y = j;
-		data->p2->z = data->alt_matrix[j][i + 1];
+		set_point(data->p1, i, j, data->alt_matrix[j][i]);
+		set_point(data->p2, i + 1, j, data->alt_matrix[j][i + 1]);
 		draw_line(data);
 	}
 }
@@ -70,12 +73,8 @@ void	draw_vertical(int i, int j, t_data *data)
 {
 	if (j < data->height)
 	{
-		data->p1->x = i;
-		data->p1->y = j;
-		data->p1->z = data->alt_matrix[j][i];
-		data->p2->x = i;
-		data->p2->y = j + 1;
-		data->p2->z = data->alt_matrix[j + 1][i];
+		set_point(data->p1, i, j, data->alt_matrix[j][i]);
+		set_point(data->p2, i, j + 1, data->alt_matrix[j + 1][i]);
 		draw_line(data);
 	}
 }
