@@ -6,7 +6,7 @@
 /*   By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 09:00:31 by rsoo              #+#    #+#             */
-/*   Updated: 2025/06/07 22:49:34 by rsoo             ###   ########.fr       */
+/*   Updated: 2025/06/08 13:53:33 by rsoo             ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,9 +55,9 @@ static void	projections_scaling(int keysym, t_data *data)
 void	extra_features(int keysym, t_data *data)
 {
 	if (keysym == G_KEY)
-		data->z_scale += 1;
+		data->z_scale += 0.1;
 	else if (keysym == F_KEY)
-		data->z_scale -= 1;
+		data->z_scale -= 0.1;
 	else if (keysym == C_KEY && data->color.base_height > 0)
 		data->color.base_height -= 1;
 	else if (keysym == V_KEY)
