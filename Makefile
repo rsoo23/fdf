@@ -6,7 +6,7 @@
 #    By: rsoo <rsoo@student.42.fr>                  +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/08 08:56:06 by rsoo              #+#    #+#              #
-#    Updated: 2025/06/07 22:22:36 by rsoo             ###   ########.fr        #
+#    Updated: 2025/06/08 09:25:19 by rsoo             ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,8 @@ OBJS = $(patsubst $(SRCS_DIR)/%.c,$(OBJS_DIR)/%.o,$(SRCS))
 LIBFT_DIR = libft
 LIBFT = libft.a
 
-# Ensure the obj/ directory exists before compiling
-$(shell mkdir -p $(OBJS_DIR))
-
 $(OBJS_DIR)/%.o: $(SRCS_DIR)/%.c
+	@mkdir -p $(OBJS_DIR)
 	$(CC) $(CFLAGS) $(INCLUDE) -c $< -o $@
 
 all: $(NAME)
